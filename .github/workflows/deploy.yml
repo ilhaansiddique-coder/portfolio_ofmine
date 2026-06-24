@@ -44,6 +44,12 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           # Lifts the GitHub API rate limit during the build fetch.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # OPTIONAL: a Personal Access Token YOU own (classic, scope:
+          # read:user). When set, the contribution total INCLUDES your
+          # private contributions so it matches your profile (e.g. 473).
+          # Add it under Settings → Secrets and variables → Actions →
+          # New repository secret, named GH_CONTRIB_TOKEN.
+          GH_CONTRIB_TOKEN: ${{ secrets.GH_CONTRIB_TOKEN }}
         run: npm run build
 
       - name: Add .nojekyll

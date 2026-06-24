@@ -39,9 +39,14 @@ function headers(): HeadersInit {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
   };
-  // The deploy workflow passes the built-in GITHUB_TOKEN to lift the
-  // unauthenticated rate limit (60/hr -> 5000/hr). Optional locally.
-  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  // Any GitHub token lifts the unauthenticated rate limit (60/hr -> 5000/hr).
+  // The deploy workflow passes the built-in GITHUB_TOKEN; locally you can set
+  // GH_CONTRIB_TOKEN in .env.local — the same token also powers projects,
+  // your avatar and the contribution graph.
+  const token =
+    process.env.GITHUB_TOKEN ||
+    process.env.GH_TOKEN ||
+    process.env.GH_CONTRIB_TOKEN;
   if (token) h.Authorization = `Bearer ${token}`;
   return h;
 }

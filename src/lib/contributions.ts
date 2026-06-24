@@ -13,38 +13,122 @@ export type Contributions = {
   longestStreak: number;
   bestDay: { date: string; count: number };
   available: boolean;
+  source: 'graphql' | 'public' | 'none';
 };
 
 /**
- * Fetch the public contribution calendar for the configured user.
+ * Fetch the contribution calendar for the configured user.
  *
- * Uses a free, token-less aggregator of GitHub's public contribution
- * graph so this works at build time without auth. Falls back to an
- * empty (but correctly-shaped) calendar if the network is unavailable,
- * so the page always renders.
+ * Resolution order:
+ *  1. GitHub GraphQL API — the official, authoritative source. When the
+ *     token is a Personal Access Token owned by YOU, the total INCLUDES
+ *     your private contributions (so it matches the number on your
+ *     profile, e.g. 473). Set it via the GH_CONTRIB_TOKEN env / secret.
+ *  2. Public aggregator — token-less fallback. Sees only PUBLIC
+ *     contributions unless you enabled "Show private contributions on my
+ *     profile" in GitHub → Contribution settings.
+ *  3. Empty calendar — so the page always renders (e.g. offline build).
  */
 export async function fetchContributions(): Promise<Contributions> {
-  const { username } = config.github;
+  const fromGraphQL = await fetchFromGraphQL();
+  if (fromGraphQL) return fromGraphQL;
+
+  const fromPublic = await fetchFromPublic();
+  if (fromPublic) return fromPublic;
+
+  return shape(emptyYear(), false, 'none');
+}
+
+const CONTRIB_LEVEL: Record<string, 0 | 1 | 2 | 3 | 4> = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+};
+
+async function fetchFromGraphQL(): Promise<Contributions | null> {
+  const token =
+    process.env.GH_CONTRIB_TOKEN ||
+    process.env.GITHUB_TOKEN ||
+    process.env.GH_TOKEN;
+  if (!token) return null;
+
+  const query = `
+    query($login: String!) {
+      user(login: $login) {
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+                contributionLevel
+              }
+            }
+          }
+        }
+      }
+    }`;
+
   try {
-    const res = await fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-      { next: { revalidate: 3600 } }
-    );
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { login: config.github.username },
+      }),
+      next: { revalidate: 3600 },
+    });
     if (!res.ok) throw new Error(`status ${res.status}`);
-    const data = (await res.json()) as {
-      contributions: ContribDay[];
-    };
-    return shape(data.contributions, true);
+    const json = await res.json();
+    const cal =
+      json?.data?.user?.contributionsCollection?.contributionCalendar;
+    if (!cal) throw new Error('no calendar in response');
+
+    const days: ContribDay[] = cal.weeks.flatMap((w: any) =>
+      w.contributionDays.map((d: any) => ({
+        date: d.date,
+        count: d.contributionCount,
+        level: CONTRIB_LEVEL[d.contributionLevel] ?? 0,
+      }))
+    );
+    // Use GitHub's authoritative total (matches the profile headline).
+    return shape(days, true, 'graphql', cal.totalContributions);
   } catch (err) {
-    console.warn('[contributions] fetch failed, using empty calendar:', err);
-    return shape(emptyYear(), false);
+    console.warn('[contributions] graphql failed:', err);
+    return null;
   }
 }
 
-function shape(days: ContribDay[], available: boolean): Contributions {
-  const total = days.reduce((s, d) => s + d.count, 0);
+async function fetchFromPublic(): Promise<Contributions | null> {
+  try {
+    const res = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${config.github.username}?y=last`,
+      { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) throw new Error(`status ${res.status}`);
+    const data = (await res.json()) as { contributions: ContribDay[] };
+    return shape(data.contributions, true, 'public');
+  } catch (err) {
+    console.warn('[contributions] public api failed:', err);
+    return null;
+  }
+}
 
-  // Streaks (counting consecutive days with at least one contribution).
+function shape(
+  days: ContribDay[],
+  available: boolean,
+  source: Contributions['source'],
+  totalOverride?: number
+): Contributions {
+  const total = totalOverride ?? days.reduce((s, d) => s + d.count, 0);
+
   let longest = 0;
   let run = 0;
   for (const d of days) {
@@ -56,7 +140,6 @@ function shape(days: ContribDay[], available: boolean): Contributions {
     }
   }
 
-  // Current streak = trailing run of active days from the end.
   let current = 0;
   for (let i = days.length - 1; i >= 0; i--) {
     if (days[i].count > 0) current += 1;
@@ -75,14 +158,13 @@ function shape(days: ContribDay[], available: boolean): Contributions {
     longestStreak: longest,
     bestDay,
     available,
+    source,
   };
 }
 
 /** 53 weeks of zero-contribution days, so the grid renders when offline. */
 function emptyYear(): ContribDay[] {
   const days: ContribDay[] = [];
-  // Deterministic dates would require a fixed "today"; we only need the
-  // count of cells for layout, so dates are placeholders here.
   for (let i = 0; i < 371; i++) {
     days.push({ date: `cell-${i}`, count: 0, level: 0 });
   }
