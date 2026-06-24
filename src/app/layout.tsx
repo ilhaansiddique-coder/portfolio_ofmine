@@ -35,7 +35,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
-      <body>{children}</body>
+      {/* suppressHydrationWarning: browser extensions (ColorZilla, Grammarly,
+          etc.) inject attributes like `cz-shortcut-listen` onto <body> on the
+          client, which otherwise triggers a harmless hydration warning. */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

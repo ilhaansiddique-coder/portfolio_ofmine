@@ -77,8 +77,13 @@ export const config = {
     github: 'https://github.com/ilhaansiddique-coder',
     linkedin: '',
     twitter: '',
-    email: 'nike0307@yahoo.se',
+    email: 'proxadbd', // ⚠️ add the full address, e.g. proxadbd@gmail.com
     website: '',
+    // Shown as a "Call" button (tel: link).
+    phone: '0919187587',
+    // International WhatsApp number — digits only, with country code, NO
+    // leading 0 and NO "+". Used for the wa.me link. (Assumed +880 / Bangladesh.)
+    whatsapp: '880919187587',
   },
 };
 

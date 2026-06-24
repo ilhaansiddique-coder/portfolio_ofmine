@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, Globe } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, Globe, Phone, MessageCircle } from 'lucide-react';
 import { config } from '@/config';
 import { SectionHeading } from './Section';
 
@@ -9,15 +9,25 @@ export default function Contact() {
   const { social } = config;
 
   const items = [
-    social.github && { icon: Github, label: 'GitHub', href: social.github },
-    social.linkedin && { icon: Linkedin, label: 'LinkedIn', href: social.linkedin },
-    social.twitter && { icon: Twitter, label: 'Twitter', href: social.twitter },
-    social.website && { icon: Globe, label: 'Website', href: social.website },
+    social.whatsapp && {
+      icon: MessageCircle,
+      label: 'WhatsApp',
+      href: `https://wa.me/${social.whatsapp}`,
+    },
+    social.phone && {
+      icon: Phone,
+      label: 'Call',
+      href: `tel:${social.phone}`,
+    },
     social.email && {
       icon: Mail,
       label: 'Email',
       href: `mailto:${social.email}`,
     },
+    social.github && { icon: Github, label: 'GitHub', href: social.github },
+    social.linkedin && { icon: Linkedin, label: 'LinkedIn', href: social.linkedin },
+    social.twitter && { icon: Twitter, label: 'Twitter', href: social.twitter },
+    social.website && { icon: Globe, label: 'Website', href: social.website },
   ].filter(Boolean) as { icon: typeof Github; label: string; href: string }[];
 
   return (
@@ -41,7 +51,11 @@ export default function Contact() {
             <a
               key={label}
               href={href}
-              target={href.startsWith('mailto:') ? undefined : '_blank'}
+              target={
+                href.startsWith('mailto:') || href.startsWith('tel:')
+                  ? undefined
+                  : '_blank'
+              }
               rel="noreferrer"
               className="btn-ghost"
             >
