@@ -15,6 +15,7 @@ export type Repo = {
   updatedAt: string;
   fork: boolean;
   archived: boolean;
+  featured: boolean;
   // A best-effort live preview image (GitHub OpenGraph card).
   ogImage: string;
 };
@@ -103,6 +104,7 @@ export async function fetchRepos(): Promise<Repo[]> {
   }
 
   const excludeSet = new Set(exclude.map((n) => n.toLowerCase()));
+  const featuredSet = new Set(featured.map((n) => n.toLowerCase()));
 
   let repos: Repo[] = raw
     .filter((r) => !excludeSet.has(r.name.toLowerCase()))
@@ -123,6 +125,7 @@ export async function fetchRepos(): Promise<Repo[]> {
       updatedAt: r.updated_at,
       fork: r.fork,
       archived: r.archived,
+      featured: featuredSet.has(r.name.toLowerCase()),
       ogImage: `https://opengraph.githubassets.com/1/${r.full_name}`,
     }));
 

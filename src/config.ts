@@ -13,17 +13,20 @@
 
 export const config = {
   // --- WHO YOU ARE -------------------------------------------
-  name: 'Ilhaan',
+  name: 'Ilhaan Siddique',
+  // Short logo/wordmark shown in the navbar & footer.
+  logo: 'IlhaanSq',
   // Short title shown under your name in the hero.
   role: 'Full-Stack Developer',
   // One or two sentences. Shown in the hero.
   tagline:
-    'I build clean, performant web apps and love turning ideas into shipped products. Explore my open-source work below.',
+    'I ship code every single day — building e-commerce platforms, auth systems, and modern web apps with Next.js & TypeScript. Explore my work below.',
   // A longer paragraph for the About section.
   about:
-    "I'm a developer passionate about crafting delightful user experiences and robust back-end systems. " +
-    "My projects below are pulled straight from my GitHub — each card links to the live source so you can " +
-    "dive into the code, the README, and the demos. Always learning, always building.",
+    "I'm Ilhaan Siddique, a full-stack developer who lives in the editor — building real, " +
+    "production-style projects from e-commerce storefronts to authentication systems and reusable themes. " +
+    "Every project below is pulled straight from my GitHub, where I push commits daily. " +
+    "Each card links to the live source so you can dive into the code, the README, and the demos.",
   // Optional: path to a photo placed in /public (e.g. '/avatar.jpg').
   // Leave empty to use your GitHub avatar automatically.
   avatar: '',
@@ -32,11 +35,16 @@ export const config = {
   // --- GITHUB ------------------------------------------------
   github: {
     // 👇 PUT YOUR EXACT GITHUB USERNAME HERE 👇
-    username: 'ilhaan',
+    username: 'ilhaansiddique-coder',
 
     // Repo names to pin to the front, in this order. Optional.
     // e.g. ['my-cool-app', 'algo-visualizer']
-    featured: [] as string[],
+    featured: [
+      'hobbymartbd-ecom',
+      'mega_auth_nextjs',
+      'yangkedu_ecom_theme',
+      'HRM_IlhaanSq',
+    ] as string[],
 
     // Repo names to hide from the site. Optional.
     exclude: [] as string[],
@@ -66,10 +74,10 @@ export const config = {
   // --- SOCIAL / CONTACT --------------------------------------
   // Leave any value empty ('') to hide that link.
   social: {
-    github: 'https://github.com/ilhaan',
+    github: 'https://github.com/ilhaansiddique-coder',
     linkedin: '',
     twitter: '',
-    email: '',
+    email: 'nike0307@yahoo.se',
     website: '',
   },
 };

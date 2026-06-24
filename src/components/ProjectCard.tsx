@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, GitFork, ExternalLink, Github } from 'lucide-react';
+import { Star, GitFork, ExternalLink, Github, Sparkles } from 'lucide-react';
 import type { Repo } from '@/lib/github';
 
 const LANG_COLORS: Record<string, string> = {
@@ -41,7 +41,11 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.45, delay: (index % 3) * 0.08 }}
-      className="card-hover group flex flex-col overflow-hidden rounded-2xl border border-line bg-card"
+      className={`card-hover group flex flex-col overflow-hidden rounded-2xl border bg-card ${
+        repo.featured
+          ? 'border-neon/40 shadow-glow'
+          : 'border-line'
+      }`}
     >
       {/* Live preview image (GitHub OpenGraph card of the repo) */}
       <a
@@ -50,6 +54,11 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
         rel="noreferrer"
         className="relative block aspect-[2/1] overflow-hidden border-b border-line bg-surface"
       >
+        {repo.featured && (
+          <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1 rounded-full bg-neon/90 px-2.5 py-1 text-[11px] font-semibold text-white shadow-glow backdrop-blur">
+            <Sparkles size={12} /> Featured
+          </span>
+        )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={repo.ogImage}

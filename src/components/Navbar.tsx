@@ -5,6 +5,7 @@ import { config } from '@/config';
 
 const links = [
   { href: '#about', label: 'About' },
+  { href: '#activity', label: 'Activity' },
   { href: '#projects', label: 'Projects' },
   { href: '#contact', label: 'Contact' },
 ];
@@ -28,9 +29,14 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-        <a href="#top" className="font-mono text-lg font-bold tracking-tight">
-          <span className="gradient-text">{config.name}</span>
-          <span className="text-neon">.</span>
+        <a
+          href="#top"
+          className="flex items-center gap-2 font-mono text-lg font-bold tracking-tight"
+        >
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-neon to-neon-cyan text-sm font-extrabold text-white shadow-glow">
+            {config.logo.slice(0, 2)}
+          </span>
+          <span className="gradient-text">{config.logo}</span>
         </a>
         <div className="hidden items-center gap-1 sm:flex">
           {links.map((l) => (
