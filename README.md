@@ -75,3 +75,4 @@ src/
 .github/workflows/deploy.yml
 next.config.mjs        ← static export + basePath
 ```
+# portfolio_ofmine
