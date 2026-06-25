@@ -47,7 +47,8 @@ export const config = {
     ] as string[],
 
     // Repo names to hide from the site. Optional.
-    exclude: ['portfolio_ofmine'] as string[],
+    // 'tireshop' is the older version; 'new_tireshop_dc' (kept) has a live demo.
+    exclude: ['portfolio_ofmine', 'tireshop'] as string[],
 
     // Hide forks / archived repos from the grid.
     hideForks: true,
