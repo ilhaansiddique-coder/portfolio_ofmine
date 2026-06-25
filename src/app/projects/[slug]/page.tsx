@@ -15,8 +15,10 @@ import {
 } from 'lucide-react';
 import { fetchRepos, fetchRepoDetail } from '@/lib/github';
 import { deriveInsight, prettyName } from '@/lib/enrich';
+import { buildLiveTabs, thumbnailFor } from '@/lib/preview';
 import { config } from '@/config';
 import LanguageBar from '@/components/LanguageBar';
+import LiveProject from '@/components/LiveProject';
 import Readme from '@/components/Readme';
 
 // Pre-render one static page per repo at build time.
@@ -58,6 +60,7 @@ export default async function ProjectPage({
 
   const { repo, languages, readme } = detail;
   const insight = deriveInsight(repo, languages);
+  const liveTabs = buildLiveTabs(repo, languages, insight.demo);
 
   return (
     <main className="relative min-h-screen overflow-x-hidden pb-24">
@@ -115,15 +118,37 @@ export default async function ProjectPage({
           </div>
         </header>
 
-        {/* Preview image */}
-        <div className="mt-10 overflow-hidden rounded-2xl border border-line bg-card">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={repo.ogImage}
-            alt={`${insight.title} preview`}
-            className="w-full"
-          />
-        </div>
+        {/* Live, rendered project */}
+        <section className="mt-10">
+          <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-slate-400">
+            Live preview
+          </h2>
+          {liveTabs.length > 0 ? (
+            <LiveProject tabs={liveTabs} title={insight.title} />
+          ) : (
+            <div className="overflow-hidden rounded-2xl border border-line bg-card">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={thumbnailFor(repo)}
+                alt={`${insight.title} preview`}
+                className="w-full"
+              />
+              <p className="border-t border-line px-4 py-3 text-xs text-slate-400">
+                This project runs as a native/mobile app, so it can&apos;t be
+                rendered live in the browser. Explore the README below or{' '}
+                <a
+                  href={repo.htmlUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-neon hover:underline"
+                >
+                  view the code on GitHub
+                </a>
+                .
+              </p>
+            </div>
+          )}
+        </section>
 
         {/* Insight grid */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">

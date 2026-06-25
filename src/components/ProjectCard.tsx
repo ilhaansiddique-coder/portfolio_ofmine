@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Star, GitFork, ExternalLink, Github, Sparkles, ArrowUpRight } from 'lucide-react';
 import type { Repo } from '@/lib/github';
+import { thumbnailFor } from '@/lib/preview';
 
 const LANG_COLORS: Record<string, string> = {
   TypeScript: '#3178c6',
@@ -35,6 +37,9 @@ function prettyName(name: string) {
 export default function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
   const langColor = repo.language ? LANG_COLORS[repo.language] ?? '#7c5cff' : '#7c5cff';
   const demo = repo.homepage && repo.homepage.startsWith('http') ? repo.homepage : null;
+  // Screenshot of the deployed site when available; fall back to the GitHub
+  // social card if the screenshot can't be fetched.
+  const [thumb, setThumb] = useState(thumbnailFor(repo));
 
   return (
     <motion.article
@@ -60,7 +65,8 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
         )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={repo.ogImage}
+          src={thumb}
+          onError={() => thumb !== repo.ogImage && setThumb(repo.ogImage)}
           alt={`${repo.name} preview`}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
