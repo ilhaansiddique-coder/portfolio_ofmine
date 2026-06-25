@@ -47,7 +47,7 @@ export const config = {
     ] as string[],
 
     // Repo names to hide from the site. Optional.
-    exclude: [] as string[],
+    exclude: ['portfolio_ofmine'] as string[],
 
     // Hide forks / archived repos from the grid.
     hideForks: true,
