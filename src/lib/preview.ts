@@ -1,15 +1,15 @@
 import type { Repo, LanguageStat } from './github';
 
-// Languages StackBlitz WebContainers can boot & run live in the browser.
-const WEB_LANGS = new Set([
+// A repo can be booted live by StackBlitz only if it's a Node/web project.
+// We key off the PRIMARY language so a Flutter app that happens to contain a
+// little HTML/CSS isn't mistakenly offered an in-browser runtime it can't use.
+const RUNNABLE_PRIMARY = new Set([
   'TypeScript',
   'JavaScript',
-  'HTML',
-  'CSS',
-  'SCSS',
   'Vue',
   'Svelte',
   'Astro',
+  'HTML',
 ]);
 
 /** A live screenshot of a deployed URL (no API key required). */
@@ -60,11 +60,10 @@ export function buildLiveTabs(
     });
   }
 
-  const isWeb =
-    (repo.language && WEB_LANGS.has(repo.language)) ||
-    languages.some((l) => WEB_LANGS.has(l.name));
+  const primary = repo.language || languages[0]?.name || '';
+  const isRunnable = RUNNABLE_PRIMARY.has(primary);
 
-  if (isWeb) {
+  if (isRunnable) {
     tabs.push({
       id: 'run',
       label: 'Run in Browser',

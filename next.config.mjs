@@ -8,9 +8,14 @@
 const rawBase = process.env.NEXT_PUBLIC_BASE_PATH || '';
 const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
 
+// `output: 'export'` is only for production builds. Applying it during
+// `next dev` breaks dynamic routes (Next falsely reports a missing
+// generateStaticParams), so we omit it in development.
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig = {
-  // Produce a fully static site in ./out for GitHub Pages.
-  output: 'export',
+  // Produce a fully static site in ./out for GitHub Pages (build only).
+  ...(isDev ? {} : { output: 'export' }),
   basePath,
   assetPrefix: basePath || undefined,
   trailingSlash: true,

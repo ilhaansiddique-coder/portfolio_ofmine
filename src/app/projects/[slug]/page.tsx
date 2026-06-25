@@ -134,8 +134,9 @@ export default async function ProjectPage({
                 className="w-full"
               />
               <p className="border-t border-line px-4 py-3 text-xs text-slate-400">
-                This project runs as a native/mobile app, so it can&apos;t be
-                rendered live in the browser. Explore the README below or{' '}
+                This project can&apos;t be booted live in the browser (e.g. a
+                native/mobile app or a non-web stack). Explore the README below
+                or{' '}
                 <a
                   href={repo.htmlUrl}
                   target="_blank"
