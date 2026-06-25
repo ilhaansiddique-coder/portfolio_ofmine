@@ -70,7 +70,99 @@ export const config = {
   //   highlights: ['Cart & checkout flow', 'Admin product management', 'Responsive UI'],
   //   demo: 'https://your-live-demo.com',
   // },
-  projectOverrides: {} as Record<
+  projectOverrides: {
+    'HRM_IlhaanSq': {
+      tagline:
+        'A commercial-grade, multi-tenant HR Management SaaS covering the full employee lifecycle.',
+      summary:
+        'HRM SaaS is a multi-tenant Human Resource Management platform built on a modern Next.js SaaS stack. ' +
+        'Each organization gets a tenant-isolated workspace to manage its entire employee lifecycle — ' +
+        'onboarding, attendance, leave, payroll, performance, recruitment, learning and documents. ' +
+        'It is a full product, not a demo: real database schema (PostgreSQL/PLpgSQL), Docker tooling, and a ' +
+        'modular architecture organised around distinct HR domains.',
+      skills: [
+        'Next.js',
+        'TypeScript',
+        'PostgreSQL',
+        'Multi-tenant SaaS',
+        'Docker',
+        'Authentication',
+        'Payroll Logic',
+      ],
+      highlights: [
+        'Multi-tenant, tenant-isolated workspaces',
+        'Full HR suite: employees, attendance, leave, payroll, performance, recruitment',
+        'PostgreSQL data layer with PLpgSQL',
+        'Dockerized for deployment',
+        'Modular, domain-driven architecture',
+      ],
+    },
+    'mega_auth_nextjs_postgresql': {
+      tagline:
+        'A full authentication system built with Next.js and PostgreSQL.',
+      summary:
+        'An authentication-focused application built with Next.js and a PostgreSQL backend, ' +
+        'implementing the core building blocks of secure user access — registration, login and ' +
+        'session handling — with a persistent relational user store.',
+      skills: [
+        'Next.js',
+        'TypeScript',
+        'PostgreSQL',
+        'Authentication',
+        'Sessions',
+        'Security',
+      ],
+      highlights: [
+        'Sign-up and login flows',
+        'PostgreSQL-backed user store',
+        'Session / access management',
+        'Built on the Next.js App Router',
+      ],
+    },
+    'hobbymartbd-ecom-drone': {
+      tagline:
+        'An e-commerce storefront for a hobby & drone shop, built with Next.js.',
+      summary:
+        'HobbyMart BD is an e-commerce storefront for a hobby and drone retailer, built with Next.js, ' +
+        'TypeScript and a custom-styled UI. It focuses on a clean, responsive shopping experience for ' +
+        'browsing and presenting products.',
+      skills: [
+        'Next.js',
+        'TypeScript',
+        'React',
+        'Tailwind CSS',
+        'E-commerce',
+        'Responsive UI',
+      ],
+      highlights: [
+        'E-commerce storefront UI',
+        'Responsive, mobile-first design',
+        'Next.js App Router architecture',
+        'Component-driven front end',
+      ],
+    },
+    'yangkedu_ecom_theme_template': {
+      tagline:
+        'A reusable e-commerce theme/template built with Next.js and TypeScript.',
+      summary:
+        'A reusable e-commerce theme template built with Next.js and TypeScript — a styled, ' +
+        'component-driven storefront layout designed to be adapted across different online shops.',
+      skills: [
+        'Next.js',
+        'TypeScript',
+        'React',
+        'Tailwind CSS',
+        'UI Design',
+        'Theming',
+      ],
+      highlights: [
+        'Reusable storefront theme',
+        'Component-driven layout',
+        'Responsive design',
+        'Next.js + TypeScript foundation',
+      ],
+    },
+  } as Record<
     string,
     {
       tagline?: string;
