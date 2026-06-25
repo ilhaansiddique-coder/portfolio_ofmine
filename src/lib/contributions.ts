@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import { readCache, writeCache } from './cache';
 
 export type ContribDay = {
   date: string; // YYYY-MM-DD
@@ -90,6 +91,7 @@ async function fetchFromGraphQL(): Promise<Contributions | null> {
     const cal =
       json?.data?.user?.contributionsCollection?.contributionCalendar;
     if (!cal) throw new Error('no calendar in response');
+    await writeCache(`gql:contrib:${config.github.username}`, cal);
 
     const days: ContribDay[] = cal.weeks.flatMap((w: any) =>
       w.contributionDays.map((d: any) => ({
@@ -102,6 +104,17 @@ async function fetchFromGraphQL(): Promise<Contributions | null> {
     return shape(days, true, 'graphql', cal.totalContributions);
   } catch (err) {
     console.warn('[contributions] graphql failed:', err);
+    const cal = await readCache<any>(`gql:contrib:${config.github.username}`);
+    if (cal) {
+      const days: ContribDay[] = cal.weeks.flatMap((w: any) =>
+        w.contributionDays.map((d: any) => ({
+          date: d.date,
+          count: d.contributionCount,
+          level: CONTRIB_LEVEL[d.contributionLevel] ?? 0,
+        }))
+      );
+      return shape(days, true, 'graphql', cal.totalContributions);
+    }
     return null;
   }
 }
@@ -114,9 +127,14 @@ async function fetchFromPublic(): Promise<Contributions | null> {
     );
     if (!res.ok) throw new Error(`status ${res.status}`);
     const data = (await res.json()) as { contributions: ContribDay[] };
+    await writeCache(`public:contrib:${config.github.username}`, data.contributions);
     return shape(data.contributions, true, 'public');
   } catch (err) {
     console.warn('[contributions] public api failed:', err);
+    const cached = await readCache<ContribDay[]>(
+      `public:contrib:${config.github.username}`
+    );
+    if (cached) return shape(cached, true, 'public');
     return null;
   }
 }

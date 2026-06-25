@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import { readCache, writeCache } from './cache';
 
 export type Repo = {
   id: number;
@@ -63,36 +64,56 @@ function headers(): HeadersInit {
 }
 
 /**
+ * GET JSON from GitHub with a disk-cache fallback. On a successful response
+ * the body is cached; on any failure (e.g. 403 rate limit) the last cached
+ * copy is returned so the site keeps rendering. Returns null only when the
+ * call fails AND nothing is cached.
+ */
+async function ghJSON<T = any>(url: string): Promise<T | null> {
+  try {
+    const res = await fetch(url, { headers: headers(), next: { revalidate: 3600 } });
+    if (res.ok) {
+      const data = (await res.json()) as T;
+      await writeCache(url, data);
+      return data;
+    }
+    const cached = await readCache<T>(url);
+    if (cached) {
+      console.warn(`[github] ${res.status} for ${url} — served from cache`);
+      return cached;
+    }
+    console.warn(`[github] ${res.status} for ${url} — no cache available`);
+    return null;
+  } catch (err) {
+    const cached = await readCache<T>(url);
+    if (cached) {
+      console.warn(`[github] error for ${url} — served from cache`);
+      return cached;
+    }
+    console.warn(`[github] error for ${url}:`, err);
+    return null;
+  }
+}
+
+/**
  * Fetch the user's public profile. Returns null on failure so the
  * build never crashes (e.g. bad username / offline / rate limited).
  */
 export async function fetchUser(): Promise<GitHubUser | null> {
   const { username } = config.github;
-  try {
-    const res = await fetch(`${GH_API}/users/${username}`, {
-      headers: headers(),
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) {
-      console.warn(`[github] user fetch failed: ${res.status}`);
-      return null;
-    }
-    const u = await res.json();
-    return {
-      login: u.login,
-      name: u.name,
-      avatarUrl: u.avatar_url,
-      bio: u.bio,
-      htmlUrl: u.html_url,
-      followers: u.followers,
-      publicRepos: u.public_repos,
-      location: u.location,
-      blog: u.blog,
-    };
-  } catch (err) {
-    console.warn('[github] user fetch error:', err);
-    return null;
-  }
+  const u = await ghJSON<any>(`${GH_API}/users/${username}`);
+  if (!u) return null;
+  return {
+    login: u.login,
+    name: u.name,
+    avatarUrl: u.avatar_url,
+    bio: u.bio,
+    htmlUrl: u.html_url,
+    followers: u.followers,
+    publicRepos: u.public_repos,
+    location: u.location,
+    blog: u.blog,
+  };
 }
 
 /**
@@ -103,21 +124,10 @@ export async function fetchRepos(): Promise<Repo[]> {
   const { username, featured, exclude, hideForks, hideArchived, maxProjects } =
     config.github;
 
-  let raw: any[] = [];
-  try {
-    const res = await fetch(
-      `${GH_API}/users/${username}/repos?per_page=100&sort=updated`,
-      { headers: headers(), next: { revalidate: 3600 } }
-    );
-    if (!res.ok) {
-      console.warn(`[github] repos fetch failed: ${res.status}`);
-      return [];
-    }
-    raw = await res.json();
-  } catch (err) {
-    console.warn('[github] repos fetch error:', err);
-    return [];
-  }
+  const raw = await ghJSON<any[]>(
+    `${GH_API}/users/${username}/repos?per_page=100&sort=updated`
+  );
+  if (!raw) return [];
 
   const excludeSet = new Set(exclude.map((n) => n.toLowerCase()));
   const featuredSet = new Set(featured.map((n) => n.toLowerCase()));
@@ -169,40 +179,25 @@ export async function fetchRepos(): Promise<Repo[]> {
 
 /** Language byte-breakdown for a repo, as sorted percentages. */
 export async function fetchLanguages(fullName: string): Promise<LanguageStat[]> {
-  try {
-    const res = await fetch(`${GH_API}/repos/${fullName}/languages`, {
-      headers: headers(),
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return [];
-    const data = (await res.json()) as Record<string, number>;
-    const total = Object.values(data).reduce((s, n) => s + n, 0) || 1;
-    return Object.entries(data)
-      .map(([name, bytes]) => ({
-        name,
-        bytes,
-        percent: Math.round((bytes / total) * 1000) / 10,
-      }))
-      .sort((a, b) => b.bytes - a.bytes);
-  } catch {
-    return [];
-  }
+  const data = await ghJSON<Record<string, number>>(
+    `${GH_API}/repos/${fullName}/languages`
+  );
+  if (!data) return [];
+  const total = Object.values(data).reduce((s, n) => s + n, 0) || 1;
+  return Object.entries(data)
+    .map(([name, bytes]) => ({
+      name,
+      bytes,
+      percent: Math.round((bytes / total) * 1000) / 10,
+    }))
+    .sort((a, b) => b.bytes - a.bytes);
 }
 
 /** The repo's README as raw markdown (or null if it has none). */
 export async function fetchReadme(fullName: string): Promise<string | null> {
-  try {
-    const res = await fetch(`${GH_API}/repos/${fullName}/readme`, {
-      headers: headers(),
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data?.content) return null;
-    return Buffer.from(data.content, 'base64').toString('utf-8');
-  } catch {
-    return null;
-  }
+  const data = await ghJSON<any>(`${GH_API}/repos/${fullName}/readme`);
+  if (!data?.content) return null;
+  return Buffer.from(data.content, 'base64').toString('utf-8');
 }
 
 /** Everything needed to render a single project case-study page. */

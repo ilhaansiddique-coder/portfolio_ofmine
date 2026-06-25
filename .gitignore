@@ -26,3 +26,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# local github response cache (re-seeded on next successful fetch)
+/.gh-cache/
