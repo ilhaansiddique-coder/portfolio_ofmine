@@ -16,8 +16,19 @@ export type Repo = {
   fork: boolean;
   archived: boolean;
   featured: boolean;
+  defaultBranch: string;
+  createdAt: string;
+  openIssues: number;
   // A best-effort live preview image (GitHub OpenGraph card).
   ogImage: string;
+};
+
+export type LanguageStat = { name: string; percent: number; bytes: number };
+
+export type RepoDetail = {
+  repo: Repo;
+  readme: string | null; // raw markdown, with relative URLs rewritten
+  languages: LanguageStat[];
 };
 
 export type GitHubUser = {
@@ -131,6 +142,9 @@ export async function fetchRepos(): Promise<Repo[]> {
       fork: r.fork,
       archived: r.archived,
       featured: featuredSet.has(r.name.toLowerCase()),
+      defaultBranch: r.default_branch ?? 'main',
+      createdAt: r.created_at,
+      openIssues: r.open_issues_count ?? 0,
       ogImage: `https://opengraph.githubassets.com/1/${r.full_name}`,
     }));
 
@@ -151,4 +165,56 @@ export async function fetchRepos(): Promise<Repo[]> {
   });
 
   return repos.slice(0, maxProjects);
+}
+
+/** Language byte-breakdown for a repo, as sorted percentages. */
+export async function fetchLanguages(fullName: string): Promise<LanguageStat[]> {
+  try {
+    const res = await fetch(`${GH_API}/repos/${fullName}/languages`, {
+      headers: headers(),
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return [];
+    const data = (await res.json()) as Record<string, number>;
+    const total = Object.values(data).reduce((s, n) => s + n, 0) || 1;
+    return Object.entries(data)
+      .map(([name, bytes]) => ({
+        name,
+        bytes,
+        percent: Math.round((bytes / total) * 1000) / 10,
+      }))
+      .sort((a, b) => b.bytes - a.bytes);
+  } catch {
+    return [];
+  }
+}
+
+/** The repo's README as raw markdown (or null if it has none). */
+export async function fetchReadme(fullName: string): Promise<string | null> {
+  try {
+    const res = await fetch(`${GH_API}/repos/${fullName}/readme`, {
+      headers: headers(),
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data?.content) return null;
+    return Buffer.from(data.content, 'base64').toString('utf-8');
+  } catch {
+    return null;
+  }
+}
+
+/** Everything needed to render a single project case-study page. */
+export async function fetchRepoDetail(name: string): Promise<RepoDetail | null> {
+  const repos = await fetchRepos();
+  const repo = repos.find((r) => r.name.toLowerCase() === name.toLowerCase());
+  if (!repo) return null;
+
+  const [languages, readme] = await Promise.all([
+    fetchLanguages(repo.fullName),
+    fetchReadme(repo.fullName),
+  ]);
+
+  return { repo, languages, readme };
 }

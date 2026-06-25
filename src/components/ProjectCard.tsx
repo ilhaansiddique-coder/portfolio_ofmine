@@ -1,7 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Star, GitFork, ExternalLink, Github, Sparkles } from 'lucide-react';
+import { Star, GitFork, ExternalLink, Github, Sparkles, ArrowUpRight } from 'lucide-react';
 import type { Repo } from '@/lib/github';
 
 const LANG_COLORS: Record<string, string> = {
@@ -47,11 +48,9 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
           : 'border-line'
       }`}
     >
-      {/* Live preview image (GitHub OpenGraph card of the repo) */}
-      <a
-        href={repo.htmlUrl}
-        target="_blank"
-        rel="noreferrer"
+      {/* Preview image links to the project's case-study page */}
+      <Link
+        href={`/projects/${repo.name}`}
         className="relative block aspect-[2/1] overflow-hidden border-b border-line bg-surface"
       >
         {repo.featured && (
@@ -67,13 +66,19 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-      </a>
+        <span className="absolute bottom-3 right-3 z-10 inline-flex translate-y-2 items-center gap-1 rounded-full bg-bg/80 px-3 py-1 text-xs font-medium text-white opacity-0 backdrop-blur transition-all group-hover:translate-y-0 group-hover:opacity-100">
+          View details <ArrowUpRight size={13} />
+        </span>
+      </Link>
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="font-semibold text-white transition-colors group-hover:text-neon">
+          <Link
+            href={`/projects/${repo.name}`}
+            className="font-semibold text-white transition-colors hover:text-neon group-hover:text-neon"
+          >
             {prettyName(repo.name)}
-          </h3>
+          </Link>
           <div className="flex shrink-0 items-center gap-3 text-xs text-slate-400">
             {repo.stars > 0 && (
               <span className="flex items-center gap-1">

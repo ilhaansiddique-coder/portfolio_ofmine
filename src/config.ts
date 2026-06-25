@@ -40,9 +40,9 @@ export const config = {
     // Repo names to pin to the front, in this order. Optional.
     // e.g. ['my-cool-app', 'algo-visualizer']
     featured: [
-      'hobbymartbd-ecom',
-      'mega_auth_nextjs',
-      'yangkedu_ecom_theme',
+      'hobbymartbd-ecom-drone',
+      'mega_auth_nextjs_postgresql',
+      'yangkedu_ecom_theme_template',
       'HRM_IlhaanSq',
     ] as string[],
 
@@ -56,6 +56,30 @@ export const config = {
     // Max number of projects to show.
     maxProjects: 24,
   },
+
+  // --- PER-PROJECT COPY (optional) ---------------------------
+  // Each project gets an auto-generated summary, skills and highlights
+  // from its README + languages. To override with your own punchy copy,
+  // add an entry here keyed by the EXACT repo name. Any field is optional.
+  //
+  // Example:
+  // 'hobbymartbd-ecom-drone': {
+  //   tagline: 'A full e-commerce storefront for a drone & hobby shop.',
+  //   summary: 'Built a complete shopping experience with product catalog, ...',
+  //   skills: ['Next.js', 'TypeScript', 'Stripe', 'Tailwind CSS'],
+  //   highlights: ['Cart & checkout flow', 'Admin product management', 'Responsive UI'],
+  //   demo: 'https://your-live-demo.com',
+  // },
+  projectOverrides: {} as Record<
+    string,
+    {
+      tagline?: string;
+      summary?: string;
+      skills?: string[];
+      highlights?: string[];
+      demo?: string;
+    }
+  >,
 
   // --- SKILLS (shown as chips in the About section) ----------
   skills: [
