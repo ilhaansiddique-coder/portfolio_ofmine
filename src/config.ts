@@ -181,11 +181,17 @@ export const config = {
     'React',
     'Next.js',
     'Node.js',
+    'Nest.js',
+    'PHP',
+    'Laravel',
     'Python',
     'Tailwind CSS',
     'PostgreSQL',
+    'MySQL',
+    'MongoDB',
     'Git',
     'Docker',
+    'CI/CD Pipeline',
   ],
 
   // --- SOCIAL / CONTACT --------------------------------------
