@@ -29,7 +29,7 @@ export const config = {
     "Each card links to the live source so you can dive into the code, the README, and the demos.",
   // Optional: path to a photo placed in /public (e.g. '/avatar.jpg').
   // Leave empty to use your GitHub avatar automatically.
-  avatar: '',
+  avatar: '/newupdatedimageofmine.png',
   location: '',
 
   // --- GITHUB ------------------------------------------------
@@ -196,11 +196,13 @@ export const config = {
 
   // --- SOCIAL / CONTACT --------------------------------------
   // Leave any value empty ('') to hide that link.
+  // Path to your downloadable resume PDF (place it in /public).
+  resume: '/resume.pdf',
   social: {
     github: 'https://github.com/ilhaansiddique-coder',
     linkedin: '',
     twitter: '',
-    email: 'proxadbd', // ⚠️ add the full address, e.g. proxadbd@gmail.com
+    email: 'proxadbd@gmail.com',
     website: '',
     // Shown as a "Call" button (tel: link).
     phone: '0919187587',

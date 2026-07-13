@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://ilhaansiddique-coder.github.io/portfolio_ofmine/sitemap.xml

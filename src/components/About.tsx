@@ -11,7 +11,7 @@ export default function About({ user }: { user: GitHubUser | null }) {
   const bio = config.about || user?.bio || '';
 
   return (
-    <section id="about" className="scroll-mt-24 py-24">
+    <section id="about" className="scroll-mt-24 py-4">
       <SectionHeading eyebrow="Get to know me" title="About Me" />
 
       <div className="grid gap-10 md:grid-cols-5">

@@ -12,18 +12,38 @@ export default function Projects({ repos }: { repos: Repo[] }) {
   const languages = useMemo(() => {
     const set = new Set<string>();
     repos.forEach((r) => r.language && set.add(r.language));
-    return ['All', ...Array.from(set).sort()];
+    const extra = ['PHP', 'Laravel'].filter((l) =>
+      repos.some((r) => r.name.toLowerCase().includes(l.toLowerCase()))
+    );
+    extra.forEach((l) => set.add(l));
+    const sorted = Array.from(set).sort((a, b) => {
+      const order = ['PHP', 'Laravel', 'TypeScript'];
+      const ia = order.indexOf(a);
+      const ib = order.indexOf(b);
+      if (ia !== -1 && ib !== -1) return ia - ib;
+      if (ia !== -1) return -1;
+      if (ib !== -1) return 1;
+      return a.localeCompare(b);
+    });
+    return ['All', ...sorted];
   }, [repos]);
 
   const [filter, setFilter] = useState('All');
 
   const visible = useMemo(
-    () => (filter === 'All' ? repos : repos.filter((r) => r.language === filter)),
+    () =>
+      filter === 'All'
+        ? repos
+        : filter === 'PHP'
+          ? repos.filter((r) => r.language === 'PHP' || r.name.toLowerCase().includes('php'))
+          : filter === 'Laravel'
+            ? repos.filter((r) => r.language === 'Laravel' || r.name.toLowerCase().includes('laravel'))
+            : repos.filter((r) => r.language === filter),
     [repos, filter]
   );
 
   return (
-    <section id="projects" className="scroll-mt-24 py-24">
+    <section id="projects" className="scroll-mt-24 py-16">
       <SectionHeading eyebrow="My work" title="Projects" />
 
       {repos.length === 0 ? (
@@ -31,7 +51,7 @@ export default function Projects({ repos }: { repos: Repo[] }) {
       ) : (
         <>
           {languages.length > 2 && (
-            <div className="mb-10 flex flex-wrap justify-center gap-2">
+            <div className="mb-6 flex flex-wrap justify-center gap-2">
               {languages.map((lang) => (
                 <button
                   key={lang}
