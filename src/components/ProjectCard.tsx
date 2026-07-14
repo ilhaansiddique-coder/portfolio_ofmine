@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Star, GitFork, ExternalLink, Github, Sparkles, ArrowUpRight } from 'lucide-react';
 import type { Repo } from '@/lib/github';
-import { thumbnailFor } from '@/lib/preview';
+import { deriveCategory } from '@/lib/enrich';
+import ProjectCover from './ProjectCover';
 
 const LANG_COLORS: Record<string, string> = {
   TypeScript: '#3178c6',
@@ -37,9 +37,6 @@ function prettyName(name: string) {
 export default function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
   const langColor = repo.language ? LANG_COLORS[repo.language] ?? '#7c5cff' : '#7c5cff';
   const demo = repo.homepage && repo.homepage.startsWith('http') ? repo.homepage : null;
-  // Screenshot of the deployed site when available; fall back to the GitHub
-  // social card if the screenshot can't be fetched.
-  const [thumb, setThumb] = useState(thumbnailFor(repo));
 
   return (
     <motion.article
@@ -63,13 +60,14 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
             <Sparkles size={12} /> Featured
           </span>
         )}
-        <img
-          src={thumb}
-          onError={() => thumb !== repo.ogImage && setThumb(repo.ogImage)}
-          alt={`${repo.name} preview`}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
+          <ProjectCover
+            title={prettyName(repo.name)}
+            category={deriveCategory(repo)}
+            language={repo.language}
+            variant="card"
+          />
+        </div>
         <div className="absolute inset-0 bg-card/20 opacity-0 transition-opacity group-hover:opacity-100" />
         <span className="absolute bottom-3 right-3 z-10 inline-flex translate-y-2 items-center gap-1 rounded-full bg-bg/80 px-3 py-1 text-xs font-medium text-white opacity-0 backdrop-blur transition-all group-hover:translate-y-0 group-hover:opacity-100">
           View details <ArrowUpRight size={13} />

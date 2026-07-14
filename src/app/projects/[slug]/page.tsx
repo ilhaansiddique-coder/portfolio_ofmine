@@ -17,6 +17,7 @@ import { buildLiveTabs, thumbnailFor } from '@/lib/preview';
 import { config } from '@/config';
 import LanguageBar from '@/components/LanguageBar';
 import LiveProject from '@/components/LiveProject';
+import ProjectCover from '@/components/ProjectCover';
 import Readme from '@/components/Readme';
 
 // Pre-render one static page per repo at build time.
@@ -64,6 +65,16 @@ export default async function ProjectPage({
     <main className="relative min-h-screen overflow-x-hidden pb-24">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
       <div className="relative mx-auto max-w-4xl px-5 pt-10 sm:px-8">
+        {/* Generated cover — the project's hero banner */}
+        <div className="mt-6 overflow-hidden rounded-2xl border border-line">
+          <ProjectCover
+            title={insight.title}
+            category={insight.category}
+            language={repo.language}
+            variant="hero"
+          />
+        </div>
+
         {/* Header */}
         <header className="mt-8">
           <div className="flex items-center gap-3">

@@ -92,6 +92,19 @@ function timeAgo(iso: string): string {
   return `${Math.floor(days / 365)} year(s) ago`;
 }
 
+/**
+ * Just the project's category (E-commerce, Authentication, …). Split out from
+ * deriveInsight so client components can theme a cover without running the
+ * full insight pass (which reads the clock and would risk a hydration
+ * mismatch).
+ */
+export function deriveCategory(repo: Repo): string {
+  const haystack = [repo.name, repo.description ?? '', ...repo.topics]
+    .join(' ')
+    .toLowerCase();
+  return SIGNALS.find((s) => s.test(haystack))?.category ?? 'Web App';
+}
+
 export function deriveInsight(
   repo: Repo,
   languages: LanguageStat[]
