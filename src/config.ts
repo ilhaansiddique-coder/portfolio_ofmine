@@ -36,7 +36,7 @@ export const config = {
     "The work below is pulled straight from my GitHub and shaped into case studies so you can inspect the code, the product decisions and the technical depth behind each build.",
   // Optional: path to a photo placed in /public (e.g. '/avatar.jpg').
   // Leave empty to use your GitHub avatar automatically.
-  avatar: '',
+  avatar: '/newupdatedimageofmine.png',
   location: '',
 
   // --- GITHUB ------------------------------------------------
@@ -264,6 +264,9 @@ export const config = {
 
   // --- SOCIAL / CONTACT --------------------------------------
   // Leave any value empty ('') to hide that link.
+  // Path to the downloadable resume PDF in /public. asset() prefixes the
+  // GitHub Pages basePath — a plain "/resume.pdf" would 404 there.
+  resume: asset('/Ilhaan_Siddique_Resume.pdf'),
   social: {
     github: 'https://github.com/ilhaansiddique-coder',
     linkedin:
