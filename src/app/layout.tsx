@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { config } from '@/config';
+import MotionProvider from '@/components/MotionProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -73,7 +74,9 @@ export default function RootLayout({
       {/* suppressHydrationWarning: browser extensions (ColorZilla, Grammarly,
           etc.) inject attributes like `cz-shortcut-listen` onto <body> on the
           client, which otherwise triggers a harmless hydration warning. */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }

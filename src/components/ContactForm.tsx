@@ -54,55 +54,34 @@ export default function ContactForm() {
     e.preventDefault();
     if (!validate()) return;
 
-    const accessKey = config.contactFormAccessKey;
+    // This site is a static export — there is no server to POST to. So the
+    // form hands the composed message to the visitor's own mail client. No
+    // backend, no third-party form service, no API key.
+    setLoading(true);
+    try {
+      const body =
+        `Name: ${form.name}\n` +
+        `Email: ${form.email}\n\n` +
+        `${form.message}\n`;
 
-    // No key configured yet: hand the message to the visitor's mail client
-    // rather than posting into the void (a static export has no /api route).
-    if (!accessKey) {
-      const body = `From: ${form.name} <${form.email}>\n\n${form.message}`;
-      window.location.href =
+      const href =
         `mailto:${config.social.email}` +
         `?subject=${encodeURIComponent(form.subject)}` +
         `&body=${encodeURIComponent(body)}`;
-      addToast('success', 'Opening your email app to send the message…');
-      return;
-    }
 
-    setLoading(true);
-    try {
-      // Web3Forms accepts the post directly from the browser and emails it,
-      // so this works on any static host (Netlify, GitHub Pages, …).
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: accessKey,
-          from_name: 'Portfolio contact form',
-          name: form.name,
-          email: form.email,
-          subject: form.subject,
-          message: form.message,
-        }),
-      });
+      window.location.href = href;
 
-      const json = await res.json();
-
-      if (!res.ok || !json.success) {
-        addToast(
-          'error',
-          json.message || 'Something went wrong. Please try again.'
-        );
-        return;
-      }
-
-      addToast('success', 'Message sent successfully! I’ll get back to you soon.');
+      addToast(
+        'success',
+        'Opening your email app with the message ready to send.'
+      );
       setForm(initial);
       setErrors({});
     } catch {
-      addToast('error', 'Network error. Please check your connection and try again.');
+      addToast(
+        'error',
+        `Couldn't open your email app. Please email me directly at ${config.social.email}.`
+      );
     } finally {
       setLoading(false);
     }
@@ -213,7 +192,7 @@ export default function ContactForm() {
         >
           {loading ? (
             <>
-              <Loader2 size={18} className="animate-spin" /> Sending...
+              <Loader2 size={18} className="animate-spin" /> Opening...
             </>
           ) : (
             <>
@@ -221,6 +200,17 @@ export default function ContactForm() {
             </>
           )}
         </button>
+
+        <p className="text-center text-xs text-slate-500">
+          This opens your email app with the message ready to send. Prefer to
+          write directly?{' '}
+          <a
+            href={`mailto:${config.social.email}`}
+            className="text-neon-cyan hover:underline"
+          >
+            {config.social.email}
+          </a>
+        </p>
       </motion.form>
 
       <AnimatePresence>

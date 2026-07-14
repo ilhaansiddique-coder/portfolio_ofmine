@@ -13,16 +13,34 @@ html {
 
 body {
   @apply bg-bg text-slate-200 antialiased;
-  background-image: none;
+  /* Two soft coloured pools of light — one violet (top-left), one cyan
+     (bottom-right) — so the page reads as lit rather than flat black. */
+  background-image:
+    radial-gradient(60rem 60rem at 12% -10%, rgba(124, 92, 255, 0.16), transparent 60%),
+    radial-gradient(50rem 50rem at 105% 105%, rgba(34, 211, 238, 0.10), transparent 60%);
   background-attachment: fixed;
 }
 
-/* Subtle grid texture overlay */
+/* Grid texture overlay. Masked so the lines fade out toward the bottom
+   instead of stopping at a hard edge. */
 .grid-bg {
-  background-image: none;
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, #000 40%, transparent 100%);
 }
 
 @layer components {
+  /* Used on the hero name. This was referenced but never defined, so the
+     name rendered as plain body text. */
+  .gradient-text {
+    @apply bg-gradient-to-r from-neon via-neon-cyan to-neon-pink bg-clip-text text-transparent;
+    background-size: 200% auto;
+    @apply animate-gradient-pan;
+  }
+
   .card-hover {
     @apply transition-all duration-300 hover:-translate-y-1 hover:border-neon/60 hover:shadow-glow;
   }
@@ -41,6 +59,29 @@ body {
 
   .chip {
     @apply rounded-full border border-line bg-white/5 px-3 py-1 text-xs font-medium text-slate-300;
+  }
+
+  /* Focus ring for keyboard users — none of the interactive elements had a
+     visible focus state. */
+  .btn:focus-visible,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    @apply outline-none ring-2 ring-neon/70 ring-offset-2 ring-offset-bg;
+  }
+}
+
+/* Respect the OS "reduce motion" setting: strip animation but keep the page
+   fully legible (elements must not stay stuck at opacity:0). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
