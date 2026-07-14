@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, type ReactNode } from "react";
+import themeManifest from "@theme/manifest";
 
 export interface SiteSettings {
   site_name: string;
@@ -11,13 +12,15 @@ export interface SiteSettings {
   email?: string;
 }
 
+// The store name comes from the theme being previewed — hardcoding one theme's
+// name brands every other theme's demo with the wrong shop.
 const SETTINGS: SiteSettings = {
-  site_name: "ShopKart",
+  site_name: themeManifest.label,
   currency_symbol: "৳",
   currency: "BDT",
   address: "Dhaka, Bangladesh",
   phone: "01XXX-XXXXXX",
-  email: "support@shopkart.test",
+  email: "hello@demo.store",
 };
 
 const Ctx = createContext<SiteSettings>(SETTINGS);

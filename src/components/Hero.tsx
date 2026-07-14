@@ -112,13 +112,13 @@ export default function Hero({
         >
           {avatar ? (
             <div className="relative inline-block animate-float">
-              <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-neon via-neon-cyan to-neon-pink opacity-60 blur-xl" />
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-neon/40 via-neon-cyan/40 to-neon-pink/40 blur-md" />
+              {/* Single soft halo — one colour, no gradient, low opacity */}
+              <div className="absolute -inset-1 rounded-2xl bg-neon/15 blur-lg" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={avatar}
                 alt={name}
-                className="relative h-80 w-80 rounded-2xl border-2 border-white/10 object-cover shadow-glow sm:h-96 sm:w-96"
+                className="relative h-80 w-80 rounded-2xl border border-white/10 object-cover sm:h-96 sm:w-96"
               />
             </div>
           ) : null}

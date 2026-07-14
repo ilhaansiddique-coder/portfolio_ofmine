@@ -74,7 +74,7 @@ export default function Navbar() {
     >
       <motion.div
         style={{ scaleX: progress }}
-        className="absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-neon via-neon-cyan to-neon-pink"
+        className="absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-neon to-neon-cyan"
       />
 
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">

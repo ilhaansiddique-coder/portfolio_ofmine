@@ -1,0 +1,5 @@
+:HL["/demo/cd-ecom/_next/static/chunks/1240b_~loe-~z.css","style"]
+:HL["/demo/cd-ecom/_next/static/chunks/10hjpya76pqh~.css","style"]
+:HL["https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap","style"]
+:HL["https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"chat","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"c3iRt2q_mw_UBCHAX8ca4"}

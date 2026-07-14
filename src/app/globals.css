@@ -36,7 +36,7 @@ body {
   /* Used on the hero name. This was referenced but never defined, so the
      name rendered as plain body text. */
   .gradient-text {
-    @apply bg-gradient-to-r from-neon via-neon-cyan to-neon-pink bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-neon to-neon-cyan bg-clip-text text-transparent;
     background-size: 200% auto;
     @apply animate-gradient-pan;
   }

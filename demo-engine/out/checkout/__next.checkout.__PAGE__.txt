@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[85117,["/demo/cd-ecom/_next/static/chunks/10jgfw31i7xew.js","/demo/cd-ecom/_next/static/chunks/0cka6.8qspnab.js","/demo/cd-ecom/_next/static/chunks/0d3shmwh5_nmn.js","/demo/cd-ecom/_next/static/chunks/0msz72cioov~i.js"],"default"]
-3:I[97367,["/demo/cd-ecom/_next/static/chunks/10jgfw31i7xew.js","/demo/cd-ecom/_next/static/chunks/0cka6.8qspnab.js","/demo/cd-ecom/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+2:I[85117,["/demo/shopkart/_next/static/chunks/0aensabwsf_4a.js","/demo/shopkart/_next/static/chunks/0d3shmwh5_nmn.js","/demo/shopkart/_next/static/chunks/0i8q4mgv80xi2.js","/demo/shopkart/_next/static/chunks/183b16zttl.2_.js","/demo/shopkart/_next/static/chunks/0og9e9eh5sbev.js","/demo/shopkart/_next/static/chunks/05i5ww519.lgi.js","/demo/shopkart/_next/static/chunks/0adzznxdy~tb4.js"],"default"]
+3:I[97367,["/demo/shopkart/_next/static/chunks/0aensabwsf_4a.js","/demo/shopkart/_next/static/chunks/0d3shmwh5_nmn.js","/demo/shopkart/_next/static/chunks/0i8q4mgv80xi2.js","/demo/shopkart/_next/static/chunks/183b16zttl.2_.js","/demo/shopkart/_next/static/chunks/0og9e9eh5sbev.js","/demo/shopkart/_next/static/chunks/05i5ww519.lgi.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/demo/cd-ecom/_next/static/chunks/0msz72cioov~i.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"eyG9IP3bl7WpJmBV8FdKg"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/demo/shopkart/_next/static/chunks/0adzznxdy~tb4.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"OEw91HkoB7SWk7hS9RHuy"}
 5:null
