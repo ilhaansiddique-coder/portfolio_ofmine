@@ -29,3 +29,12 @@ yarn-error.log*
 
 # local github response cache (re-seeded on next successful fetch)
 /.gh-cache/
+
+# Cloned source repos used to build the live theme demos. These are real git
+# clones — committing them creates broken gitlinks that corrupt fresh clones.
+/.demo-src/
+
+# Build output of the demo engine (regenerated; must not be committed)
+/demo-engine/out/
+/demo-engine/.next/
+/demo-engine/node_modules/
