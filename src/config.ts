@@ -11,22 +11,29 @@
  * `github.featured`. To hide repos, add them to `github.exclude`.
  */
 
+/**
+ * Files in /public are served under the site's basePath. Plain <a href="...">
+ * links do NOT get the basePath prefixed automatically (unlike next/link), so
+ * build public-asset URLs with this helper or they 404 on GitHub Pages.
+ */
+const BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/$/, '');
+export const asset = (path: string) =>
+  `${BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`;
+
 export const config = {
   // --- WHO YOU ARE -------------------------------------------
   name: 'Ilhaan Siddique',
   // Short logo/wordmark shown in the navbar & footer.
   logo: 'IlhaanSq',
   // Short title shown under your name in the hero.
-  role: 'Full-Stack Developer',
+  role: 'Full-Stack Web, SaaS & Android App Developer',
   // One or two sentences. Shown in the hero.
   tagline:
-    'I ship code every single day — building e-commerce platforms, auth systems, and modern web apps with Next.js & TypeScript. Explore my work below.',
+    'I build production-ready web apps, SaaS dashboards, backend systems and mobile-ready experiences with Next.js, TypeScript, PostgreSQL and modern deployment workflows.',
   // A longer paragraph for the About section.
   about:
-    "I'm Ilhaan Siddique, a full-stack developer who lives in the editor — building real, " +
-    "production-style projects from e-commerce storefronts to authentication systems and reusable themes. " +
-    "Every project below is pulled straight from my GitHub, where I push commits daily. " +
-    "Each card links to the live source so you can dive into the code, the README, and the demos.",
+    "I'm Ilhaan Siddique, a full-stack developer focused on practical product engineering: polished interfaces, secure authentication, database-backed dashboards, SaaS architecture and mobile-first user experiences. " +
+    "The work below is pulled straight from my GitHub and shaped into case studies so you can inspect the code, the product decisions and the technical depth behind each build.",
   // Optional: path to a photo placed in /public (e.g. '/avatar.jpg').
   // Leave empty to use your GitHub avatar automatically.
   avatar: '',
@@ -194,19 +201,83 @@ export const config = {
     'CI/CD Pipeline',
   ],
 
+  services: [
+    {
+      title: 'Full-Stack Web Apps',
+      description:
+        'Responsive, production-style web applications with React, Next.js, TypeScript, API integration and clean component architecture.',
+      skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    },
+    {
+      title: 'SaaS & Dashboards',
+      description:
+        'Tenant-aware admin panels, role-based access, data tables, reports, exports and business workflows backed by PostgreSQL.',
+      skills: ['PostgreSQL', 'Prisma', 'Auth', 'RBAC'],
+    },
+    {
+      title: 'Android & Mobile Apps',
+      description:
+        'Mobile-first product experiences, Android-ready interfaces and app flows connected to real backend services and APIs.',
+      skills: ['Android', 'Mobile UI', 'APIs', 'Offline-ready UX'],
+    },
+    {
+      title: 'Backend & Deployment',
+      description:
+        'Secure server logic, database design, Docker-based deployment, CI/CD setup, monitoring and maintainable production workflows.',
+      skills: ['Node.js', 'Docker', 'CI/CD', 'Sentry'],
+    },
+  ],
+
+  workflow: [
+    {
+      step: '01',
+      title: 'Plan',
+      description:
+        'Turn product requirements into features, data models, routes, roles and a clear implementation path.',
+    },
+    {
+      step: '02',
+      title: 'Build',
+      description:
+        'Create the UI, backend logic, authentication, database flows and integrations with clean reusable code.',
+    },
+    {
+      step: '03',
+      title: 'Ship',
+      description:
+        'Prepare deployment, environment variables, migrations, performance checks and production-ready docs.',
+    },
+    {
+      step: '04',
+      title: 'Improve',
+      description:
+        'Iterate from real use: polish UX, tighten security, add reporting and improve speed where it matters.',
+    },
+  ],
+
+  proof: [
+    { value: '24+', label: 'Public projects' },
+    { value: '4', label: 'Featured case studies' },
+    { value: 'Full-stack', label: 'Web, backend, mobile' },
+    { value: 'Daily', label: 'GitHub practice' },
+  ],
+
   // --- SOCIAL / CONTACT --------------------------------------
   // Leave any value empty ('') to hide that link.
   social: {
     github: 'https://github.com/ilhaansiddique-coder',
-    linkedin: '',
+    linkedin:
+      'https://www.linkedin.com/in/abdullah-al-mamun-ilhaan-468974390/',
     twitter: '',
-    email: 'proxadbd', // ⚠️ add the full address, e.g. proxadbd@gmail.com
+    email: 'proxadbd@gmail.com',
     website: '',
+    // Downloadable CV in /public. asset() adds the GitHub Pages basePath.
+    resume: asset('/Ilhaan_Siddique_Resume.pdf'),
     // Shown as a "Call" button (tel: link).
-    phone: '0919187587',
+    phone: '+8801919187587',
     // International WhatsApp number — digits only, with country code, NO
-    // leading 0 and NO "+". Used for the wa.me link. (Assumed +880 / Bangladesh.)
-    whatsapp: '880919187587',
+    // leading 0 and NO "+". Used for the wa.me link.
+    whatsapp: '8801919187587',
   },
 };
 

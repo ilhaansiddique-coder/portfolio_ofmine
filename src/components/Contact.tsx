@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, Globe, Phone, MessageCircle } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, Globe, Phone, MessageCircle, FileText } from 'lucide-react';
 import { config } from '@/config';
 import { SectionHeading } from './Section';
 
@@ -25,6 +25,7 @@ export default function Contact() {
       href: `mailto:${social.email}`,
     },
     social.github && { icon: Github, label: 'GitHub', href: social.github },
+    social.resume && { icon: FileText, label: 'Resume', href: social.resume },
     social.linkedin && { icon: Linkedin, label: 'LinkedIn', href: social.linkedin },
     social.twitter && { icon: Twitter, label: 'Twitter', href: social.twitter },
     social.website && { icon: Globe, label: 'Website', href: social.website },
@@ -41,9 +42,8 @@ export default function Contact() {
         transition={{ duration: 0.5 }}
         className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-line bg-card p-10 text-center sm:p-14"
       >
-        <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-96 -translate-x-1/2 rounded-full bg-neon/20 blur-3xl" />
         <p className="relative text-lg text-slate-300">
-          Have a project in mind, or just want to chat? My inbox is always open.
+          Have a web app, SaaS dashboard, backend system or mobile product in mind? I&apos;m open to discussing serious builds and long-term engineering work.
         </p>
 
         <div className="relative mt-8 flex flex-wrap justify-center gap-3">

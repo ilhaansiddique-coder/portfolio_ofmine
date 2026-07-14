@@ -41,7 +41,6 @@ export default function Readme({
           a: ({ node, ...props }) => (
             <a target="_blank" rel="noreferrer" {...props} />
           ),
-          // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
           img: ({ node, ...props }) => <img loading="lazy" {...props} />,
         }}
       >

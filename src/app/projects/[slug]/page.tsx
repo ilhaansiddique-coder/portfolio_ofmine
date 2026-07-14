@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
-  ArrowLeft,
   Star,
   GitFork,
   ExternalLink,
@@ -66,13 +64,6 @@ export default async function ProjectPage({
     <main className="relative min-h-screen overflow-x-hidden pb-24">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
       <div className="relative mx-auto max-w-4xl px-5 pt-10 sm:px-8">
-        <Link
-          href="/#projects"
-          className="inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-neon"
-        >
-          <ArrowLeft size={16} /> Back to all projects
-        </Link>
-
         {/* Header */}
         <header className="mt-8">
           <div className="flex items-center gap-3">
@@ -85,7 +76,7 @@ export default async function ProjectPage({
           </div>
 
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-            <span className="gradient-text">{insight.title}</span>
+            <span className="text-neon">{insight.title}</span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-300">{insight.tagline}</p>
 
@@ -127,7 +118,6 @@ export default async function ProjectPage({
             <LiveProject tabs={liveTabs} title={insight.title} />
           ) : (
             <div className="overflow-hidden rounded-2xl border border-line bg-card">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={thumbnailFor(repo)}
                 alt={`${insight.title} preview`}
@@ -216,12 +206,6 @@ export default async function ProjectPage({
           )}
         </section>
 
-        {/* Footer nav */}
-        <div className="mt-12 border-t border-line pt-8 text-center">
-          <Link href="/#projects" className="btn-ghost">
-            <ArrowLeft size={16} /> Back to all projects
-          </Link>
-        </div>
       </div>
     </main>
   );

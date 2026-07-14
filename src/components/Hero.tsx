@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Star, FolderGit2 } from 'lucide-react';
+import { ArrowDown, Github, Star, FolderGit2, FileText } from 'lucide-react';
 import { config } from '@/config';
 import type { GitHubUser } from '@/lib/github';
 
@@ -30,8 +30,7 @@ export default function Hero({
       >
         {avatar ? (
           <div className="relative inline-block animate-float">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-neon via-neon-cyan to-neon-pink opacity-70 blur-md" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <div className="absolute -inset-1 rounded-full border border-neon/60 bg-neon/10 shadow-glow" />
             <img
               src={avatar}
               alt={name}
@@ -57,7 +56,7 @@ export default function Hero({
         transition={{ duration: 0.6, delay: 0.2 }}
         className="text-5xl font-extrabold leading-tight tracking-tight sm:text-7xl"
       >
-        Hi, I&apos;m <span className="gradient-text">{name}</span>
+        Hi, I&apos;m <span className="text-neon">{name}</span>
       </motion.h1>
 
       <motion.p
@@ -95,6 +94,15 @@ export default function Hero({
         >
           <Github size={18} /> GitHub Profile
         </a>
+        {config.social.resume ? (
+          <a
+            href={config.social.resume}
+            download="Ilhaan_Siddique_Resume.pdf"
+            className="btn-ghost"
+          >
+            <FileText size={18} /> Download Resume
+          </a>
+        ) : null}
       </motion.div>
 
       <motion.div
@@ -116,6 +124,22 @@ export default function Hero({
             />
           </>
         ) : null}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.65 }}
+        className="mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
+      >
+        {config.proof.map((item) => (
+          <div key={item.label} className="rounded-2xl border border-line bg-card/70 p-4">
+            <div className="text-lg font-bold text-white">{item.value}</div>
+            <div className="mt-1 text-xs uppercase tracking-wider text-slate-500">
+              {item.label}
+            </div>
+          </div>
+        ))}
       </motion.div>
 
       <motion.a

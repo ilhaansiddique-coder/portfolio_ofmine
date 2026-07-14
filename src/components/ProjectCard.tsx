@@ -63,7 +63,6 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
             <Sparkles size={12} /> Featured
           </span>
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={thumb}
           onError={() => thumb !== repo.ogImage && setThumb(repo.ogImage)}
@@ -71,7 +70,7 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-card/20 opacity-0 transition-opacity group-hover:opacity-100" />
         <span className="absolute bottom-3 right-3 z-10 inline-flex translate-y-2 items-center gap-1 rounded-full bg-bg/80 px-3 py-1 text-xs font-medium text-white opacity-0 backdrop-blur transition-all group-hover:translate-y-0 group-hover:opacity-100">
           View details <ArrowUpRight size={13} />
         </span>

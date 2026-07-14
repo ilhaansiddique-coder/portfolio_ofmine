@@ -132,7 +132,7 @@ export async function fetchRepos(): Promise<Repo[]> {
   const excludeSet = new Set(exclude.map((n) => n.toLowerCase()));
   const featuredSet = new Set(featured.map((n) => n.toLowerCase()));
 
-  let repos: Repo[] = raw
+  const repos: Repo[] = raw
     .filter((r) => !excludeSet.has(r.name.toLowerCase()))
     .filter((r) => (hideForks ? !r.fork : true))
     .filter((r) => (hideArchived ? !r.archived : true))
