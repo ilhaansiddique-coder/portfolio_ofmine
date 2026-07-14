@@ -33,9 +33,18 @@ export interface Product {
   preorder?: boolean;
 }
 
-const img = (id: string) => `https://images.unsplash.com/${id}?w=700&q=80`;
-// Clean product-style ingredient photos (on white, no people) from TheMealDB.
-const mealdb = (name: string) => `https://www.themealdb.com/images/ingredients/${encodeURIComponent(name)}.png`;
+// The demo is mounted under a basePath (e.g. /portfolio_ofmine/demo/cd-ecom).
+// Next only rewrites basePath for next/link and _next assets — a plain
+// <img src="/foo.webp"> is left alone and would 404. Prefix them ourselves.
+const BASE = process.env.NEXT_PUBLIC_DEMO_BASE || "";
+const A = (p: string) => `${BASE}${p}`;
+
+// Images are vendored into /public/mock so the demo is self-contained:
+// no third-party image host, no per-visit randomness, works offline.
+const img = (id: string) => A(`/mock/unsplash-${id}.webp`);
+// Clean product-style ingredient photos (on white, no people), vendored locally.
+const mealdb = (name: string) =>
+  A(`/mock/mealdb-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.webp`);
 
 // Organic-grocery catalogue (Ghorer-Bazar-style). Preview-only mock data —
 // the live engine supplies the tenant's real products. All copy is original.
@@ -158,7 +167,7 @@ Anti-inflammatory – curcumin helps calm everyday inflammation and supports joi
 Antioxidant shield – fights free radicals that contribute to cell ageing and oxidative stress.
 Immune support – traditional compounds help the body stay resilient through changing seasons.
 Digestive aid – stimulates bile flow to support smoother digestion of rich, oily meals.
-Pure colour – its natural golden pigment brightens dishes without any synthetic food dye.`, image: "/products/turmeric-powder.webp" },
+Pure colour – its natural golden pigment brightens dishes without any synthetic food dye.`, image: A("/products/turmeric-powder.webp") },
   { id: 10, name: "Red Chilli Powder (লাল মরিচ গুঁড়া)", slug: "red-chilli-powder", price: 210, originalPrice: 270, category: "Spices", category_slug: "spices", brand_slug: "pureleaf", stock: 180, unlimitedStock: true, description: `Discover the Red Chilli Powder stone-ground from sun-dried red chillies in small batches, with nothing added—no brick dust, no colour, no adulteration—just the clean fire of the pepper itself; this spice is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
 
 Rich in capsaicin, vitamin C, and natural carotenoids, Red Chilli Powder is more than just a spice—it's the soul of a bold, flavourful kitchen. Its fiery aroma and deep red colour make it perfect for everyday use, whether spicing up curries, rubbing onto grilled meats, or adding a kick to marinades and chutneys.
@@ -244,7 +253,7 @@ Largest pack – twenty-five kilos for events, big families, and serious mango l
 Straight from orchard – minimal handling keeps each mango fresh, fragrant, and naturally ripe.
 No carbide ever – ripened the honest way, by sunlight and patience, not chemicals.
 Smooth fibre-free pulp – buttery flesh that slices and blends beautifully every single time.
-Wholesome nutrition – loaded with vitamins and antioxidants for healthy skin and immunity.`, image: "https://loremflickr.com/700/700/mango,pickle?lock=67" },
+Wholesome nutrition – loaded with vitamins and antioxidants for healthy skin and immunity.`, image: mealdb("Mango") },
 
   // ── More Honey ──
   { id: 17, name: "Black Seed Honey 1 kg (কালোজিরা মধু)", slug: "black-seed-honey", price: 1500, originalPrice: 1650, category: "Honey", category_slug: "honey", brand_slug: "goldenbee", stock: 55, unlimitedStock: false, description: `Discover the Black Seed Honey 1 kg gathered by beekeepers and gently combined with cold-pressed black seed (kalonji), uniting raw honey and the prized dark seed without any heat or processing; this honey is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
@@ -346,7 +355,7 @@ Whole-grain fibre – bran and germ deliver fibre that supports digestion and la
 Plant protein – contributes protein for muscle maintenance and balanced everyday nutrition.
 B vitamins – whole wheat naturally supplies B vitamins for energy and a healthy metabolism.
 Soft, pliable dough – fine milling produces tender rotis that stay soft for hours.
-No refining – ground with everything the grain offers, nothing stripped away or bleached.`, image: "/products/premium-atta.webp" },
+No refining – ground with everything the grain offers, nothing stripped away or bleached.`, image: A("/products/premium-atta.webp") },
   { id: 30, name: "Coriander Powder 200 g (ধনিয়া গুঁড়া)", slug: "coriander-powder", price: 150, originalPrice: 190, category: "Spices", category_slug: "spices", brand_slug: "pureleaf", stock: 160, unlimitedStock: true, description: `Discover the Coriander Powder 200 g stone-ground from sun-dried coriander seeds in small fresh batches, with nothing added—no fillers, no colour—just the clean, citrusy spice itself; this spice is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
 
 Rich in dietary fibre, antioxidants, and essential oils, Coriander Powder is more than just a spice—it's the gentle backbone of balanced curry flavour. Its warm, citrusy aroma make it perfect for everyday use, whether building a masala base, seasoning lentils and vegetables, or blending into spice rubs and marinades.
@@ -358,7 +367,7 @@ Digestive aid – traditionally used to ease bloating and support comfortable, s
 Antioxidant rich – natural plant compounds help defend cells against everyday oxidative stress.
 Aromatic essential oils – freshly ground seeds release warm, citrusy oils for deeper flavour.
 Blood sugar support – studies suggest coriander may help support healthy blood sugar balance.
-Pure and unblended – ground from whole seeds only, with no fillers or artificial colour.`, image: "/products/coriander-powder.webp" },
+Pure and unblended – ground from whole seeds only, with no fillers or artificial colour.`, image: A("/products/coriander-powder.webp") },
 
   // ── More Organic Certified ──
   { id: 23, name: "Organic Spirulina 250 g (স্পিরুলিনা)", slug: "organic-spirulina", price: 540, originalPrice: 700, category: "Organic", category_slug: "organic", brand_slug: "pureleaf", stock: 70, unlimitedStock: false, description: `Discover the Organic Spirulina 250 g cultivated in clean, controlled freshwater ponds and gently harvested, then carefully dried into a fine powder to lock in its deep green nutrition; this blend is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
@@ -372,7 +381,7 @@ Complete protein – supplies all essential amino acids in a clean, plant-based 
 Iron-rich – plant iron supports healthy energy levels and combats everyday tiredness.
 Antioxidant power – phycocyanin and chlorophyll help defend cells against oxidative stress.
 Immune support – nutrient density helps the body stay resilient through daily demands.
-Detox helper – chlorophyll traditionally supports the body's natural cleansing processes gently.`, image: "/products/spirulina-powder.webp" },
+Detox helper – chlorophyll traditionally supports the body's natural cleansing processes gently.`, image: A("/products/spirulina-powder.webp") },
   { id: 24, name: "Organic Virgin Coconut Oil 1 L (নারিকেল তেল)", slug: "organic-coconut-oil", price: 720, originalPrice: 900, category: "Organic", category_slug: "organic", brand_slug: "pureleaf", stock: 60, unlimitedStock: false, description: `Discover the Organic Virgin Coconut Oil 1 L cold-pressed from the fresh white meat of organically grown coconuts, extracted without heat, bleaching, or refining so its delicate aroma stays intact; this oil is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
 
 Rich in medium-chain triglycerides, lauric acid, and natural antioxidants, Virgin Coconut Oil is more than just an oil—it's a versatile kitchen and beauty essential. Its fresh coconut aroma and silky texture make it perfect for everyday use, whether sautéing and baking, deep-conditioning hair, or moisturising dry skin.
@@ -396,7 +405,7 @@ Stress support – adaptogenic withanolides help the body manage everyday stress
 Restful sleep – traditionally taken at night to encourage calm, deeper, more restorative rest.
 Energy and stamina – supports steady vitality and helps reduce feelings of daily fatigue.
 Hormone balance – long used in Ayurveda to support healthy hormonal and thyroid function.
-Focus and clarity – may help sharpen concentration and ease a busy, restless mind.`, image: "/products/ashwagandha-powder.webp" },
+Focus and clarity – may help sharpen concentration and ease a busy, restless mind.`, image: A("/products/ashwagandha-powder.webp") },
   { id: 31, name: "Organic Moringa Powder 100 g (মরিঙ্গা)", slug: "organic-moringa-powder", price: 380, originalPrice: 480, category: "Organic", category_slug: "organic", brand_slug: "pureleaf", stock: 75, unlimitedStock: false, description: `Discover the Organic Moringa Powder 100 g made from shade-dried moringa leaves grown on organic farms and stone-ground at low temperatures to protect their vibrant colour and nutrients; this blend is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
 
 Rich in vitamins A and C, calcium, and plant protein, Organic Moringa Powder is more than just a green supplement—it's one of the most nutrient-dense leaves on earth. Its fresh, grassy taste and fine texture make it perfect for everyday use, whether whisked into smoothies, stirred into soups, or sprinkled over salads and curries.
@@ -408,7 +417,7 @@ Vitamin-rich – packed with vitamins A and C for healthy vision, skin, and immu
 Calcium boost – plant calcium supports strong bones and teeth without any dairy.
 Iron source – contributes plant iron to help maintain energy and reduce tiredness.
 Antioxidant load – abundant plant compounds help defend cells against oxidative stress.
-Daily nourishment – a small green scoop adds broad-spectrum nutrition to any meal.`, image: "/products/moringa-powder.webp" },
+Daily nourishment – a small green scoop adds broad-spectrum nutrition to any meal.`, image: A("/products/moringa-powder.webp") },
   { id: 26, name: "Amrapali Mango 12 kg (আম্রপালি আম)", slug: "amrapali-mango-12kg", price: 3000, originalPrice: 3600, category: "Mango", category_slug: "mango", brand_slug: "orchard", stock: 40, unlimitedStock: false, preorder: true, sold: 320, description: `Discover the Amrapali Mango 12 kg tree-ripened in the famed orchards of Rajshahi and harvested at full natural sweetness, then packed straight from the grove with absolutely no carbide or formalin; this fruit is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
 
 Rich in vitamin A, vitamin C, and dietary fibre, Amrapali Mango is more than just a fruit—it's the celebrated taste of a Rajshahi summer. Its powerful aroma and smooth, fibreless flesh make it perfect for everyday use, whether eaten chilled and fresh, blended into shakes, or set into homemade kulfi and puddings.
@@ -451,17 +460,17 @@ Five-kilo pack – the ideal size to savour this premium variety throughout its 
   { id: 65, name: "Chickpea Flour / Besan (বেসন)", slug: "besan-chickpea-flour", price: 120, originalPrice: 150, category: "Flours & Lentils", category_slug: "flours-lentils", brand_slug: "pureleaf", stock: 90, unlimitedStock: false, sold: 175, description: `Finely milled chickpea flour for crisp pakora, beguni and savoury batters — naturally gluten-free and rich in plant protein.`, image: mealdb("Plain Flour") },
 
   // ── Pickle ────────────────────────────────────────────────────────
-  { id: 66, name: "Mixed Vegetable Pickle (মিক্সড আচার)", slug: "mixed-vegetable-pickle", price: 220, originalPrice: 280, category: "Pickle", category_slug: "pickle", brand_slug: "pureleaf", stock: 85, unlimitedStock: false, sold: 240, description: `A tangy-spicy medley of seasonal vegetables sun-cured in mustard oil and traditional spices — the perfect zesty side for rice, khichuri and paratha.`, image: "https://loremflickr.com/700/700/pickle,jar?lock=66" },
-  { id: 67, name: "Mango Pickle (আমের আচার)", slug: "mango-pickle", price: 200, originalPrice: 260, category: "Pickle", category_slug: "pickle", brand_slug: "orchard", stock: 100, unlimitedStock: false, sold: 300, description: `Classic raw-mango pickle, sun-matured in mustard oil with panch phoron — bold, sour and fiery, just like home-made achaar.`, image: "https://loremflickr.com/700/700/mango,pickle?lock=67" },
-  { id: 68, name: "Garlic Pickle (রসুনের আচার)", slug: "garlic-pickle", price: 240, originalPrice: 300, category: "Pickle", category_slug: "pickle", brand_slug: "pureleaf", stock: 70, unlimitedStock: false, sold: 130, description: `Whole garlic cloves slow-cured in spiced mustard oil — pungent, warming and intensely flavourful, a little goes a long way.`, image: "https://loremflickr.com/700/700/garlic,pickle?lock=68" },
+  { id: 66, name: "Mixed Vegetable Pickle (মিক্সড আচার)", slug: "mixed-vegetable-pickle", price: 220, originalPrice: 280, category: "Pickle", category_slug: "pickle", brand_slug: "pureleaf", stock: 85, unlimitedStock: false, sold: 240, description: `A tangy-spicy medley of seasonal vegetables sun-cured in mustard oil and traditional spices — the perfect zesty side for rice, khichuri and paratha.`, image: mealdb("Garlic") },
+  { id: 67, name: "Mango Pickle (আমের আচার)", slug: "mango-pickle", price: 200, originalPrice: 260, category: "Pickle", category_slug: "pickle", brand_slug: "orchard", stock: 100, unlimitedStock: false, sold: 300, description: `Classic raw-mango pickle, sun-matured in mustard oil with panch phoron — bold, sour and fiery, just like home-made achaar.`, image: mealdb("Mango") },
+  { id: 68, name: "Garlic Pickle (রসুনের আচার)", slug: "garlic-pickle", price: 240, originalPrice: 300, category: "Pickle", category_slug: "pickle", brand_slug: "pureleaf", stock: 70, unlimitedStock: false, sold: 130, description: `Whole garlic cloves slow-cured in spiced mustard oil — pungent, warming and intensely flavourful, a little goes a long way.`, image: mealdb("Garlic") },
 
   // ── Oil & Ghee (extra) ────────────────────────────────────────────
   { id: 69, name: "Premium Desi Ghee (প্রিমিয়াম দেশি ঘি)", slug: "premium-desi-ghee", price: 1050, originalPrice: 1300, category: "Oil & Ghee", category_slug: "mustard-oil", brand_slug: "pureleaf", stock: 60, unlimitedStock: false, sold: 260, description: `Slow-cooked desi ghee with a deep nutty aroma and grainy golden texture — perfect for polao, sweets and a wholesome finishing spoon over hot rice.`, image: mealdb("Ghee"), hasVariations: true, variationType: "Size", variants: [
     { id: 691, label: "500 g", price: 1050, original_price: 1300, stock: 35, unlimited_stock: false },
     { id: 692, label: "1 kg", price: 2000, original_price: 2500, stock: 25, unlimited_stock: false },
   ] },
-  { id: 70, name: "Cold-Pressed Coconut Oil (নারকেল তেল)", slug: "cold-pressed-coconut-oil", price: 320, originalPrice: 410, category: "Oil & Ghee", category_slug: "mustard-oil", brand_slug: "pureleaf", stock: 90, unlimitedStock: false, sold: 190, description: `Pure cold-pressed coconut oil with a light, fresh aroma — equally at home in cooking, on skin, and in hair care.`, image: "https://loremflickr.com/700/700/coconut,oil?lock=70" },
-  { id: 71, name: "Black Seed Oil / Kalonji (কালোজিরা তেল)", slug: "black-seed-oil", price: 450, originalPrice: 560, category: "Oil & Ghee", category_slug: "mustard-oil", brand_slug: "pureleaf", stock: 75, unlimitedStock: false, sold: 150, description: `Cold-pressed black seed (kalonji) oil, prized in traditional wellness for its warm, peppery punch — taken by the spoon or drizzled over food.`, image: "https://loremflickr.com/700/700/blackseed,oil?lock=71" },
+  { id: 70, name: "Cold-Pressed Coconut Oil (নারকেল তেল)", slug: "cold-pressed-coconut-oil", price: 320, originalPrice: 410, category: "Oil & Ghee", category_slug: "mustard-oil", brand_slug: "pureleaf", stock: 90, unlimitedStock: false, sold: 190, description: `Pure cold-pressed coconut oil with a light, fresh aroma — equally at home in cooking, on skin, and in hair care.`, image: mealdb("Desiccated Coconut") },
+  { id: 71, name: "Black Seed Oil / Kalonji (কালোজিরা তেল)", slug: "black-seed-oil", price: 450, originalPrice: 560, category: "Oil & Ghee", category_slug: "mustard-oil", brand_slug: "pureleaf", stock: 75, unlimitedStock: false, sold: 150, description: `Cold-pressed black seed (kalonji) oil, prized in traditional wellness for its warm, peppery punch — taken by the spoon or drizzled over food.`, image: mealdb("Olive Oil") },
 ];
 
 // Sample "sold" figures so the deal cards show a sales count like a marketplace.
@@ -470,26 +479,29 @@ PRODUCTS.forEach((p, i) => { p.sold = SOLD[i] ?? 1200; });
 
 // PDP gallery — the main cutout first, then a few real photos of the SAME kind
 // of product (different angles/uses) so the thumbnail rail shows variety.
-const photo = (kw: string, seed: number) => `https://loremflickr.com/600/600/${kw}?lock=${seed}`;
-const GALLERY_KW: Record<string, string> = {
-  "mustard-oil": "mustard,oil",
-  "ghee": "ghee,butter",
-  "honey": "honey,jar",
-  "dates": "dates,fruit",
-  "nuts-seeds": "nuts,snack",
-  "spices": "spice,powder",
-  "tea-coffee": "tea,leaves",
-  "organic": "organic,food",
-  "mango": "mango,fruit",
-  "rice": "rice,grain",
-  "flours-lentils": "lentils,flour",
-  "pickle": "pickle,jar",
+const CATEGORY_ART: Record<string, string> = {
+  "mustard-oil": "oilandghee",
+  "ghee": "oilandghee",
+  "honey": "honey",
+  "dates": "dates",
+  "nuts-seeds": "nutsandseeds",
+  "spices": "spices",
+  "tea-coffee": "beverage",
+  "organic": "organic",
+  "mango": "mango",
+  "rice": "rice",
+  "flours-lentils": "flowersandlentils",
+  "pickle": "functionalfood",
 };
+
+// PDP gallery: the product cutout first, then on-topic category art. Previously
+// this pulled three RANDOM photos per product from loremflickr, which is why a
+// bottle of black seed oil could render as a photograph of a cat.
 PRODUCTS.forEach((p) => {
   if (p.images) return;
-  const kw = GALLERY_KW[p.category_slug || ""] || "organic,food";
-  const main = p.image || "/placeholder.svg";
-  p.images = [main, photo(kw, p.id * 4 + 1), photo(kw, p.id * 4 + 2), photo(kw, p.id * 4 + 3)];
+  const art = CATEGORY_ART[p.category_slug || ""] || "organic";
+  const main = p.image || A("/placeholder.svg");
+  p.images = [main, A(`/categories/${art}.webp`), A("/hero-spices.webp")];
 });
 
 // One product carries a demo video so the floating player can be previewed.

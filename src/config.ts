@@ -26,7 +26,7 @@ export const config = {
   // Short logo/wordmark shown in the navbar & footer.
   logo: 'IlhaanSq',
   // Short title shown under your name in the hero.
-  role: 'Full-Stack Web, SaaS & Android App Developer',
+  role: 'Full-Stack Web, SaaS & Android, iOS App Developer',
   // One or two sentences. Shown in the hero.
   tagline:
     'I build production-ready web apps, SaaS dashboards, backend systems and mobile-ready experiences with Next.js, TypeScript, PostgreSQL and modern deployment workflows.',

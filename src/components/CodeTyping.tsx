@@ -32,12 +32,16 @@ function buildTokens(
   const t: Token[] = [];
   const push = (text: string, className?: string) => t.push({ text, className });
 
-  const list = (items: string[]) => {
+  // Render up to `max` entries, then a literal "…" to signal there are more.
+  const list = (items: string[], max: number) => {
+    const head = items.slice(0, max);
+    const more = items.length > max;
     push('[', PUNCT);
-    items.forEach((item, i) => {
+    head.forEach((item, i) => {
       push(`'${item}'`, STRING);
-      if (i < items.length - 1) push(', ', PUNCT);
+      if (i < head.length - 1 || more) push(', ', PUNCT);
     });
+    if (more) push('...', PUNCT);
     push('],\n', PUNCT);
   };
 
@@ -58,11 +62,11 @@ function buildTokens(
 
   push('  stack', PROP);
   push(': ', PUNCT);
-  list(stack);
+  list(stack, 4);
 
   push('  building', PROP);
   push(': ', PUNCT);
-  list(domains);
+  list(domains, 3);
 
   push('  projects', PROP);
   push(': ', PUNCT);
