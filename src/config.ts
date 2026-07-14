@@ -262,6 +262,18 @@ export const config = {
     { value: 'Daily', label: 'GitHub practice' },
   ],
 
+  // --- CONTACT FORM ------------------------------------------
+  // This site is a STATIC export, so there is no server to receive form
+  // posts (an /api route is stripped out of the export). Web3Forms accepts
+  // the submission straight from the browser and emails it to you.
+  //
+  // Get a free key in ~30 seconds: https://web3forms.com — enter your email,
+  // they send you an Access Key. Paste it here.
+  //
+  // If left empty, the form gracefully falls back to opening the visitor's
+  // mail client with the message pre-filled, so it never silently fails.
+  contactFormAccessKey: '',
+
   // --- SOCIAL / CONTACT --------------------------------------
   // Leave any value empty ('') to hide that link.
   // Path to the downloadable resume PDF in /public. asset() prefixes the

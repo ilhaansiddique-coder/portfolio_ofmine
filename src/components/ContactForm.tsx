@@ -3,6 +3,7 @@
 import { useState, useRef, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { config } from '@/config';
 
 type FormState = {
   name: string;
@@ -53,23 +54,51 @@ export default function ContactForm() {
     e.preventDefault();
     if (!validate()) return;
 
+    const accessKey = config.contactFormAccessKey;
+
+    // No key configured yet: hand the message to the visitor's mail client
+    // rather than posting into the void (a static export has no /api route).
+    if (!accessKey) {
+      const body = `From: ${form.name} <${form.email}>\n\n${form.message}`;
+      window.location.href =
+        `mailto:${config.social.email}` +
+        `?subject=${encodeURIComponent(form.subject)}` +
+        `&body=${encodeURIComponent(body)}`;
+      addToast('success', 'Opening your email app to send the message…');
+      return;
+    }
+
     setLoading(true);
     try {
-      const res = await fetch('/api/contact', {
+      // Web3Forms accepts the post directly from the browser and emails it,
+      // so this works on any static host (Netlify, GitHub Pages, …).
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          from_name: 'Portfolio contact form',
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        }),
       });
 
       const json = await res.json();
 
-      if (!res.ok) {
-        const msg = json.error || json.errors?.[0] || 'Something went wrong. Please try again.';
-        addToast('error', msg);
+      if (!res.ok || !json.success) {
+        addToast(
+          'error',
+          json.message || 'Something went wrong. Please try again.'
+        );
         return;
       }
 
-      addToast('success', json.message || 'Message sent successfully!');
+      addToast('success', 'Message sent successfully! I’ll get back to you soon.');
       setForm(initial);
       setErrors({});
     } catch {
