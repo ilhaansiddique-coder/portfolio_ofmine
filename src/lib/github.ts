@@ -123,6 +123,7 @@ export async function fetchUser(): Promise<GitHubUser | null> {
 export async function fetchRepos(): Promise<Repo[]> {
   const { username, featured, exclude, hideForks, hideArchived, maxProjects } =
     config.github;
+  const languageOverrides = config.github.languageOverrides ?? {};
 
   const raw = await ghJSON<any[]>(
     `${GH_API}/users/${username}/repos?per_page=100&sort=updated`
@@ -143,7 +144,7 @@ export async function fetchRepos(): Promise<Repo[]> {
       description: r.description,
       htmlUrl: r.html_url,
       homepage: r.homepage,
-      language: r.language,
+      language: languageOverrides[r.name] ?? r.language,
       topics: r.topics ?? [],
       stars: r.stargazers_count,
       forks: r.forks_count,

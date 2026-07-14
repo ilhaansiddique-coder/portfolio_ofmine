@@ -57,6 +57,15 @@ export const config = {
     // 'tireshop' is the older version — 'new_tireshop_dc' (kept) has a live demo.
     exclude: ['portfolio_ofmine', 'tireshop'] as string[],
 
+    // GitHub reports a repo's "primary language" by counting bytes, which can
+    // misrepresent a project. ecom-futurebd is a Laravel app, but its React
+    // frontend edges out the PHP backend on line count (356KB TS vs 312KB PHP),
+    // so GitHub labels it TypeScript. Override it here so the card reflects
+    // what the project actually IS, not what it has the most bytes of.
+    languageOverrides: {
+      'ecom-futurebd': 'PHP',
+    } as Record<string, string>,
+
     // Show everything, including forks and archived repos.
     hideForks: false,
     hideArchived: false,

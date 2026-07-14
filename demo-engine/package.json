@@ -1,0 +1,26 @@
+{
+  "name": "cd-ecom-theme-preview",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone local preview harness for the Ecom Theme Template (stubs the CD Ecom storefront engine).",
+  "scripts": {
+    "sync": "node scripts/sync-theme.mjs",
+    "predev": "npm run sync",
+    "dev": "next dev -p 3100",
+    "prebuild": "npm run sync",
+    "build": "next build",
+    "start": "next start -p 3100"
+  },
+  "dependencies": {
+    "next": "16.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.5.3"
+  }
+}

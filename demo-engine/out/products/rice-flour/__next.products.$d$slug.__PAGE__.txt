@@ -1,0 +1,74 @@
+1:"$Sreact.fragment"
+2:I[6380,["/demo/cd-ecom/_next/static/chunks/0rj~5k2hdgghm.js","/demo/cd-ecom/_next/static/chunks/0cka6.8qspnab.js","/demo/cd-ecom/_next/static/chunks/0d3shmwh5_nmn.js","/demo/cd-ecom/_next/static/chunks/0fvln3~pf3y._.js"],"default"]
+b:I[97367,["/demo/cd-ecom/_next/static/chunks/0rj~5k2hdgghm.js","/demo/cd-ecom/_next/static/chunks/0cka6.8qspnab.js","/demo/cd-ecom/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+c:"$Sreact.suspense"
+3:T47f,Discover the Rice Flour 2 kg stone-ground from carefully selected rice in small batches and sifted to a fine, silky texture, with no bleaching, additives, or anti-caking agents; this flour is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
+
+Rich in complex carbohydrates, natural starch, and gentle nutrients, Rice Flour is more than just a baking staple—it's the heart of countless traditional treats. Its smooth texture and neutral taste make it perfect for everyday use, whether shaping soft pitha, thickening curries and gravies, or baking light, gluten-free breads and pancakes.
+
+Rice Flour is certified to BSTI food-safety standards.
+
+Nutritional Benefits:
+Naturally gluten-free – a safe, versatile flour for those avoiding wheat and gluten.
+Smooth thickener – fine grind dissolves easily to thicken sauces, soups, and batters cleanly.
+Light texture – produces tender, delicate pitha, dumplings, and steamed cakes every time.
+Energy source – complex carbohydrates provide steady fuel for active, busy daily routines.
+Additive-free – stone-ground with nothing added, just pure, freshly milled rice flour.4:T496,Discover the Turmeric Powder stone-ground from sun-dried turmeric rhizomes grown on trusted family farms, milled slowly to lock in colour and aroma with no artificial dye or filler; this spice is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
+
+Rich in curcumin, antioxidants, and anti-inflammatory compounds, Turmeric Powder is more than just a spice—it's a golden pillar of wellness and flavour. Its earthy aroma and vivid colour make it perfect for everyday use, whether building the base of a curry, stirring into warming golden milk, or seasoning roasted vegetables.
+
+Turmeric Powder is certified to EU and USDA NOP organic standards.
+
+Nutritional Benefits:
+Anti-inflammatory – curcumin helps calm everyday inflammation and supports joint comfort and mobility.
+Antioxidant shield – fights free radicals that contribute to cell ageing and oxidative stress.
+Immune support – traditional compounds help the body stay resilient through changing seasons.
+Digestive aid – stimulates bile flow to support smoother digestion of rich, oily meals.
+Pure colour – its natural golden pigment brightens dishes without any synthetic food dye.5:T476,Discover the Red Chilli Powder stone-ground from sun-dried red chillies in small batches, with nothing added—no brick dust, no colour, no adulteration—just the clean fire of the pepper itself; this spice is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
+
+Rich in capsaicin, vitamin C, and natural carotenoids, Red Chilli Powder is more than just a spice—it's the soul of a bold, flavourful kitchen. Its fiery aroma and deep red colour make it perfect for everyday use, whether spicing up curries, rubbing onto grilled meats, or adding a kick to marinades and chutneys.
+
+Red Chilli Powder is certified to BSTI food-safety standards.
+
+Nutritional Benefits:
+Metabolism lift – capsaicin gently boosts metabolism and may support healthy weight management.
+Vitamin C – supports immunity and helps the body absorb iron from your meals.
+Natural colour – its vivid red comes from carotenoids, not artificial dye or fillers.
+Circulation aid – the warming heat traditionally encourages healthy blood flow and digestion.
+Antioxidant rich – plant pigments help defend cells against everyday oxidative damage.6:T46a,Discover the Premium Atta 2 kg stone-ground from whole wheat grain selected for plumpness and freshness, milled with the bran and germ intact and never bleached or refined; this flour is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
+
+Rich in dietary fibre, plant protein, and B vitamins, Premium Atta is more than just flour—it's the wholesome foundation of every home-cooked meal. Its soft, pliable dough and earthy flavour make it perfect for everyday use, whether rolling out fluffy rotis, layering flaky parathas, or baking rustic whole-wheat breads.
+
+Premium Atta is certified to BSTI food-safety standards.
+
+Nutritional Benefits:
+Whole-grain fibre – bran and germ deliver fibre that supports digestion and lasting fullness.
+Plant protein – contributes protein for muscle maintenance and balanced everyday nutrition.
+B vitamins – whole wheat naturally supplies B vitamins for energy and a healthy metabolism.
+Soft, pliable dough – fine milling produces tender rotis that stay soft for hours.
+No refining – ground with everything the grain offers, nothing stripped away or bleached.7:T491,Discover the Coriander Powder 200 g stone-ground from sun-dried coriander seeds in small fresh batches, with nothing added—no fillers, no colour—just the clean, citrusy spice itself; this spice is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
+
+Rich in dietary fibre, antioxidants, and essential oils, Coriander Powder is more than just a spice—it's the gentle backbone of balanced curry flavour. Its warm, citrusy aroma make it perfect for everyday use, whether building a masala base, seasoning lentils and vegetables, or blending into spice rubs and marinades.
+
+Coriander Powder is certified to BSTI food-safety standards.
+
+Nutritional Benefits:
+Digestive aid – traditionally used to ease bloating and support comfortable, smooth digestion daily.
+Antioxidant rich – natural plant compounds help defend cells against everyday oxidative stress.
+Aromatic essential oils – freshly ground seeds release warm, citrusy oils for deeper flavour.
+Blood sugar support – studies suggest coriander may help support healthy blood sugar balance.
+Pure and unblended – ground from whole seeds only, with no fillers or artificial colour.8:T4f1,Discover the Pure Mustard Oil pressed from hand-picked mustard seeds in a traditional wooden ghani, crushed slowly without heat or chemicals so the seed keeps every drop of its character; this oil is 100% natural, unprocessed, and organic—preserving all of nature's goodness.
+
+Rich in omega-3 fatty acids, vitamin E, and natural antioxidants, Pure Mustard Oil is more than just an oil—it's a cornerstone of authentic Bengali cooking. Its pungent aroma and deep golden colour make it perfect for everyday use, whether tempering hot curries, mixing fiery bhorta, or sealing crunchy homemade pickles.
+
+Pure Mustard Oil is certified to EU and USDA NOP organic standards.
+
+Nutritional Benefits:
+Heart-friendly fats – balanced omega-3 and omega-6 content supports healthy cholesterol and overall cardiovascular wellness.
+Natural warmth – its pungency stimulates circulation and is traditionally used for soothing massage.
+Antibacterial action – allyl isothiocyanate gives the oil natural antimicrobial properties for safer cooking and storage.
+Vitamin E boost – nourishes skin and hair while protecting cells from everyday oxidative stress.
+High smoke point – stays stable at frying heat, making it ideal for deep-frying and tempering without breaking down.0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"product":{"id":21,"name":"Rice Flour 2 kg (চালের গুঁড়া)","slug":"rice-flour","price":220,"originalPrice":280,"category":"Spices","category_slug":"spices","brand_slug":"pureleaf","stock":120,"unlimitedStock":true,"description":"$3","image":"https://www.themealdb.com/images/ingredients/Plain%20Flour.png","sold":1200,"images":["https://www.themealdb.com/images/ingredients/Plain%20Flour.png","https://loremflickr.com/600/600/spice,powder?lock=85","https://loremflickr.com/600/600/spice,powder?lock=86","https://loremflickr.com/600/600/spice,powder?lock=87"]},"related":[{"id":9,"name":"Turmeric Powder (খাঁটি হলুদ গুঁড়া)","slug":"turmeric-powder","price":180,"originalPrice":240,"category":"Spices","category_slug":"spices","brand_slug":"pureleaf","stock":200,"unlimitedStock":true,"description":"$4","image":"/products/turmeric-powder.webp","sold":130000,"images":["/products/turmeric-powder.webp","https://loremflickr.com/600/600/spice,powder?lock=37","https://loremflickr.com/600/600/spice,powder?lock=38","https://loremflickr.com/600/600/spice,powder?lock=39"]},{"id":10,"name":"Red Chilli Powder (লাল মরিচ গুঁড়া)","slug":"red-chilli-powder","price":210,"originalPrice":270,"category":"Spices","category_slug":"spices","brand_slug":"pureleaf","stock":180,"unlimitedStock":true,"description":"$5","image":"https://www.themealdb.com/images/ingredients/Chilli%20Powder.png","sold":88000,"images":["https://www.themealdb.com/images/ingredients/Chilli%20Powder.png","https://loremflickr.com/600/600/spice,powder?lock=41","https://loremflickr.com/600/600/spice,powder?lock=42","https://loremflickr.com/600/600/spice,powder?lock=43"]},{"id":22,"name":"Premium Atta 2 kg (আটা)","slug":"premium-atta","price":180,"originalPrice":230,"category":"Spices","category_slug":"spices","brand_slug":"pureleaf","stock":130,"unlimitedStock":true,"description":"$6","image":"/products/premium-atta.webp","sold":1200,"images":["/products/premium-atta.webp","https://loremflickr.com/600/600/spice,powder?lock=89","https://loremflickr.com/600/600/spice,powder?lock=90","https://loremflickr.com/600/600/spice,powder?lock=91"]},{"id":30,"name":"Coriander Powder 200 g (ধনিয়া গুঁড়া)","slug":"coriander-powder","price":150,"originalPrice":190,"category":"Spices","category_slug":"spices","brand_slug":"pureleaf","stock":160,"unlimitedStock":true,"description":"$7","image":"/products/coriander-powder.webp","sold":1200,"images":["/products/coriander-powder.webp","https://loremflickr.com/600/600/spice,powder?lock=121","https://loremflickr.com/600/600/spice,powder?lock=122","https://loremflickr.com/600/600/spice,powder?lock=123"]},{"id":1,"name":"Pure Mustard Oil (ঘানি ভাঙা সরিষার তেল)","slug":"pure-mustard-oil","price":380,"originalPrice":480,"category":"Mustard Oil","category_slug":"mustard-oil","brand_slug":"pureleaf","stock":120,"unlimitedStock":false,"description":"$8","image":"https://www.themealdb.com/images/ingredients/Olive%20Oil.png","hasVariations":true,"variationType":"Size","variants":[{"id":11,"label":"500 ml","price":380,"original_price":480,"stock":60,"unlimited_stock":false},{"id":12,"label":"1 litre","price":720,"original_price":900,"stock":40,"unlimited_stock":false},{"id":13,"label":"2 litre","price":1390,"original_price":1700,"stock":20,"unlimited_stock":false}],"sold":82000,"images":["https://www.themealdb.com/images/ingredients/Olive%20Oil.png","https://loremflickr.com/600/600/mustard,oil?lock=5","https://loremflickr.com/600/600/mustard,oil?lock=6","https://loremflickr.com/600/600/mustard,oil?lock=7"],"video_url":"https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"}]}],["$L9"],"$La"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"HN4vQtGh0Y5_LYRtaqdG0"}
+9:["$","script","script-0",{"src":"/demo/cd-ecom/_next/static/chunks/0fvln3~pf3y._.js","async":true}]
+a:["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]
+d:null

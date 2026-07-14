@@ -6,15 +6,22 @@ import { ArrowDown, Github, Star, FolderGit2, Download } from 'lucide-react';
 import { config } from '@/config';
 import type { GitHubUser } from '@/lib/github';
 import avatarImg from '@/images/newupdatedimageofmine.png';
+import CodeTyping from './CodeTyping';
 
 export default function Hero({
   user,
   repoCount,
   totalStars,
+  stack,
+  domains,
 }: {
   user: GitHubUser | null;
   repoCount: number;
   totalStars: number;
+  /** Languages present across the real repos — typed into the code block. */
+  stack: string[];
+  /** Project categories present across the real repos. */
+  domains: string[];
 }) {
   const avatar = avatarImg.src;
   const name = config.name || user?.name || user?.login || 'Developer';
@@ -117,6 +124,21 @@ export default function Hero({
           ) : null}
         </motion.div>
       </div>
+
+      {/* TYPED CODE BLOCK — below the hero, above the stats */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.5 }}
+        className="mt-16 w-full"
+      >
+        <CodeTyping
+          projectCount={repoCount}
+          stack={stack}
+          domains={domains}
+        />
+      </motion.div>
 
       {/* STATS — separate centered section */}
       <StatsBar
