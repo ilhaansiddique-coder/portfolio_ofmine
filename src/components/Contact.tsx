@@ -7,12 +7,13 @@ import { SectionHeading } from './Section';
 
 export default function Contact() {
   const { social } = config;
+  const whatsappNumber = social.whatsapp.replace(/\D/g, '');
 
   const items = [
     social.whatsapp && {
       icon: MessageCircle,
       label: 'WhatsApp',
-      href: `https://wa.me/${social.whatsapp}`,
+      href: `https://wa.me/${whatsappNumber}`,
     },
     social.phone && {
       icon: Phone,

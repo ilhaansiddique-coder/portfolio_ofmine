@@ -53,16 +53,16 @@ export const config = {
       'HRM_IlhaanSq',
     ] as string[],
 
-    // Repo names to hide from the site. Optional.
-    // 'tireshop' is the older version; 'new_tireshop_dc' (kept) has a live demo.
-    exclude: ['portfolio_ofmine', 'tireshop'] as string[],
+    // Repo names to hide from the site. Only this portfolio's own repo is
+    // hidden — every other public repo is imported and shown.
+    exclude: ['portfolio_ofmine'] as string[],
 
-    // Hide forks / archived repos from the grid.
-    hideForks: true,
-    hideArchived: true,
+    // Show everything, including forks and archived repos.
+    hideForks: false,
+    hideArchived: false,
 
-    // Max number of projects to show.
-    maxProjects: 24,
+    // Effectively "no limit" (the API returns up to 100 per page).
+    maxProjects: 100,
   },
 
   // --- PER-PROJECT COPY (optional) ---------------------------
@@ -278,9 +278,9 @@ export const config = {
     resume: asset('/Ilhaan_Siddique_Resume.pdf'),
     // Shown as a "Call" button (tel: link).
     phone: '+8801919187587',
-    // International WhatsApp number — digits only, with country code, NO
-    // leading 0 and NO "+". Used for the wa.me link.
-    whatsapp: '8801919187587',
+    // International WhatsApp number. The contact component normalizes this for
+    // the wa.me link.
+    whatsapp: '+8801919187587',
   },
 };
 
