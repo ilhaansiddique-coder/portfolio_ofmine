@@ -14,7 +14,7 @@
 // rebuilt if the site's basePath changes.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, rmSync, cpSync, writeFileSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, cpSync, writeFileSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -32,6 +32,15 @@ const DEMOS = [
   { slug: 'yangkedu', repo: 'yangkedu_ecom_theme_template', kind: 'next-app' },
 ];
 
+// Runs as a `prebuild` hook, so give people an escape hatch: the demos clone
+// three repos and run three Next builds, which is slow when you only want to
+// iterate on the portfolio itself.
+if (process.env.SKIP_DEMOS) {
+  console.log('[demos] SKIP_DEMOS set — skipping demo builds.');
+  console.log('[demos] Any demo already in public/demo/ is reused; missing ones will 404.');
+  process.exit(0);
+}
+
 const only = process.argv[2];
 const targets = only ? DEMOS.filter((d) => d.slug === only) : DEMOS;
 if (!targets.length) {
@@ -41,6 +50,13 @@ if (!targets.length) {
 
 const run = (cmd, args, opts = {}) =>
   execFileSync(cmd, args, { stdio: 'inherit', ...opts });
+
+/** Every .ts/.tsx under a path (which may be a single file). */
+function tsFiles(path) {
+  if (!existsSync(path)) return [];
+  if (statSync(path).isFile()) return /\.tsx?$/.test(path) ? [path] : [];
+  return readdirSync(path).flatMap((n) => tsFiles(resolve(path, n)));
+}
 
 function fetchSource({ repo }) {
   const dest = resolve(WORK, repo);
@@ -54,6 +70,13 @@ function fetchSource({ repo }) {
 /** A theme package: render it through the storefront engine. */
 function buildEngineTheme(demo, src) {
   const base = `${SITE_BASE}/demo/${demo.slug}`;
+
+  // demo-engine/node_modules is gitignored, so a fresh checkout (CI) has none.
+  if (!existsSync(resolve(ENGINE, 'node_modules'))) {
+    console.log('[demos]   installing demo-engine dependencies…');
+    run('npm', ['install', '--silent', '--no-audit', '--no-fund'], { cwd: ENGINE });
+  }
+
   const env = {
     ...process.env,
     THEME_SRC: src,
@@ -85,6 +108,41 @@ function patchForStaticExport(src) {
       console.log('[demos]   + generateStaticParams for /product/[id]');
     }
   }
+
+  // The app renders its art with plain <img src="/banners/x.png">. Next only
+  // rewrites basePath for next/link, next/image and _next assets, so those
+  // root-absolute paths 404 once the demo is mounted under /demo/<slug>/.
+  // (Verified: this app imports next/image nowhere — all 23 are plain <img> —
+  // so prefixing here cannot double up.)
+  const BASE = '${process.env.NEXT_PUBLIC_DEMO_BASE ?? ""}';
+  const ASSET_DIR = '(?:banners|products|categories|images)';
+  let patched = 0;
+
+  for (const rel of ['src/lib/products.ts', 'src/components', 'src/app']) {
+    for (const f of tsFiles(resolve(src, rel))) {
+      const before = readFileSync(f, 'utf8');
+      let s = before;
+
+      // Quoted:   "/banners/x.png"        -> `${BASE}/banners/x.png`
+      s = s.replace(
+        new RegExp(`"(/${ASSET_DIR}/[^"]+\\.(?:png|jpe?g|webp|svg))"`, 'g'),
+        (_m, p) => `\`${BASE}${p}\``,
+      );
+      // Templated: `/products/${p.id}-1.png` -> `${BASE}/products/${p.id}-1.png`
+      s = s.replace(
+        new RegExp('`(/' + ASSET_DIR + '/[^`]*)`', 'g'),
+        (_m, p) => (p.includes('NEXT_PUBLIC_DEMO_BASE') ? _m : `\`${BASE}${p}\``),
+      );
+      // Bare JSX attr: src="/icon.svg"    -> src={`${BASE}/icon.svg`}
+      s = s.replace(
+        /(\bsrc)="(\/[A-Za-z0-9._-]+\.(?:png|jpe?g|webp|svg))"/g,
+        (_m, attr, p) => `${attr}={\`${BASE}${p}\`}`,
+      );
+
+      if (s !== before) { writeFileSync(f, s); patched++; }
+    }
+  }
+  if (patched) console.log(`[demos]   ~ made image paths basePath-aware in ${patched} file(s)`);
 
   // Order ids are minted at runtime (`YKD${Date.now()}`), so no static file can
   // ever match /orders/<id>. Drop the detail route and send those links to the

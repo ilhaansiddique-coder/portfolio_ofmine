@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[22016,["/demo/cd-ecom/_next/static/chunks/0hjri_hzf6-ls.js","/demo/cd-ecom/_next/static/chunks/0cka6.8qspnab.js","/demo/cd-ecom/_next/static/chunks/0d3shmwh5_nmn.js"],""]
-3:I[97367,["/demo/cd-ecom/_next/static/chunks/0hjri_hzf6-ls.js","/demo/cd-ecom/_next/static/chunks/0cka6.8qspnab.js","/demo/cd-ecom/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","div",null,{"className":"tpl-page","style":{"maxWidth":560},"children":["$","div",null,{"className":"tpl-panel","style":{"textAlign":"center","padding":"48px 24px"},"children":[["$","h1",null,{"style":{"fontSize":22,"fontWeight":800,"margin":"0 0 8px"},"children":"Brands"}],["$","p",null,{"style":{"color":"var(--tpl-muted)","margin":"0 0 24px"},"children":"This theme doesn't ship a brands screen — the storefront engine renders its default here."}],["$","$L2",null,{"href":"/","className":"tpl-btn","children":"Back to store"}]]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"c3iRt2q_mw_UBCHAX8ca4"}
-5:null

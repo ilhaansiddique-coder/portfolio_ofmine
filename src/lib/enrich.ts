@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import { demoUrl } from './demos';
 import type { Repo, LanguageStat } from './github';
 
 export type ProjectInsight = {
@@ -160,7 +161,13 @@ export function deriveInsight(
     summary,
     skills,
     highlights,
-    demo: override.demo ?? (repo.homepage?.startsWith('http') ? repo.homepage : null),
+    // A template repo's storefront is built into this site (public/demo/<slug>/),
+    // so it wins over any external homepage: it's ours, it always works, and it
+    // embeds without a third party blocking the iframe.
+    demo:
+      override.demo ??
+      demoUrl(repo.name) ??
+      (repo.homepage?.startsWith('http') ? repo.homepage : null),
   };
 }
 

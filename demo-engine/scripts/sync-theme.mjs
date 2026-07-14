@@ -9,8 +9,8 @@
 // placeholder page, so the route still builds and says plainly that this theme
 // doesn't ship that screen.
 
-import { cpSync, rmSync, mkdirSync, existsSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { cpSync, rmSync, mkdirSync, existsSync, writeFileSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { resolve, extname } from "node:path";
 
 const ROOT = process.cwd();
 const CANDIDATES = [
@@ -79,6 +79,50 @@ for (const [file, { title, exports }] of Object.entries(OPTIONAL_SLOTS)) {
   writeFileSync(target, `${placeholder(title)}\nexport default function Page() { return <Missing />; }\n${named}\n`);
   generated.push(file);
 }
+
+/**
+ * Themes hardcode their art as root-absolute paths, e.g. src="/categories/honey.png".
+ * Two things break that here:
+ *   1. The demo is served under a basePath. Next only rewrites basePath for
+ *      next/link and _next assets — a plain <img src="/..."> is left as-is and 404s.
+ *   2. The bundled art is stored as .webp (the originals were multi-MB PNGs).
+ * So rewrite those literals to be base-aware and point at the file that exists.
+ */
+const PUBLIC = resolve(ROOT, "public");
+const IMAGE_RE = /(\/[A-Za-z0-9._\/-]+\.(?:png|jpe?g|webp|svg|gif))/;
+const BASE_EXPR = '${process.env.NEXT_PUBLIC_DEMO_BASE ?? ""}';
+
+/** The asset that actually ships, preferring the .webp we converted to. */
+function resolveAsset(p) {
+  const webp = p.replace(/\.(png|jpe?g)$/i, ".webp");
+  if (existsSync(resolve(PUBLIC, webp.slice(1)))) return webp;
+  return p;
+}
+
+function walk(dir) {
+  for (const name of readdirSync(dir)) {
+    const full = resolve(dir, name);
+    if (statSync(full).isDirectory()) { walk(full); continue; }
+    if (![".ts", ".tsx"].includes(extname(full))) continue;
+
+    const before = readFileSync(full, "utf8");
+    let after = before;
+
+    // JSX attribute:  src="/a/b.png"  ->  src={`${BASE}/a/b.webp`}
+    after = after.replace(
+      new RegExp(`(\\w+)="${IMAGE_RE.source}"`, "g"),
+      (_m, attr, path) => `${attr}={\`${BASE_EXPR}${resolveAsset(path)}\`}`,
+    );
+    // Bare string literal:  "/a/b.png"  ->  `${BASE}/a/b.webp`
+    after = after.replace(
+      new RegExp(`"${IMAGE_RE.source}"`, "g"),
+      (_m, path) => `\`${BASE_EXPR}${resolveAsset(path)}\``,
+    );
+
+    if (after !== before) writeFileSync(full, after);
+  }
+}
+walk(DEST);
 
 console.log(`[sync-theme] Theme copied into ./theme from:\n  ${SRC}`);
 if (generated.length) {

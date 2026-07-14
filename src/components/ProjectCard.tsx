@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Star, GitFork, ExternalLink, Github, Sparkles, ArrowUpRight } from 'lucide-react';
 import type { Repo } from '@/lib/github';
 import { deriveCategory } from '@/lib/enrich';
+import { demoUrl } from '@/lib/demos';
 import ProjectCover from './ProjectCover';
 
 const LANG_COLORS: Record<string, string> = {
@@ -36,7 +37,12 @@ function prettyName(name: string) {
 
 export default function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
   const langColor = repo.language ? LANG_COLORS[repo.language] ?? '#7c5cff' : '#7c5cff';
-  const demo = repo.homepage && repo.homepage.startsWith('http') ? repo.homepage : null;
+  // Template repos ship a full storefront on this site (public/demo/<slug>/);
+  // everything else falls back to whatever deployment the repo points at.
+  const demo =
+    demoUrl(repo.name) ??
+    (repo.homepage && repo.homepage.startsWith('http') ? repo.homepage : null);
+  const isLocalDemo = Boolean(demoUrl(repo.name));
 
   return (
     <motion.article
@@ -142,7 +148,7 @@ export default function ProjectCard({ repo, index }: { repo: Repo; index: number
                 rel="noreferrer"
                 className="flex items-center gap-1 text-xs font-medium text-neon-cyan transition-colors hover:text-white"
               >
-                <ExternalLink size={14} /> Live
+                <ExternalLink size={14} /> {isLocalDemo ? 'Live Demo' : 'Live'}
               </a>
             )}
           </div>

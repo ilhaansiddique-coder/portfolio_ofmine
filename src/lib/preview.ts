@@ -52,18 +52,29 @@ export function buildLiveTabs(
   const tabs: LiveTab[] = [];
 
   if (demo) {
+    // A demo we build and host ourselves (public/demo/<slug>/) is same-origin,
+    // so it always embeds — unlike a third-party deployment, which may refuse.
+    const isOwnDemo = demo.includes('/demo/');
     tabs.push({
       id: 'live',
-      label: 'Live Site',
+      label: isOwnDemo ? 'Live Demo' : 'Live Site',
       url: demo,
-      note: 'Live deployment, embedded here. If it appears blank, the site blocks embedding — use “Open in new tab”.',
+      note: isOwnDemo
+        ? 'The real storefront, built from this repository and running here — browse it, add to cart, check out.'
+        : 'Live deployment, embedded here. If it appears blank, the site blocks embedding — use “Open in new tab”.',
     });
   }
 
   const primary = repo.language || languages[0]?.name || '';
   const isRunnable = RUNNABLE_PRIMARY.has(primary);
 
-  if (isRunnable) {
+  // If we already host the real thing, don't also offer StackBlitz. It would be
+  // redundant, and for the theme packages it cannot work at all: they declare no
+  // dependencies and their build script shells out to the storefront engine,
+  // which lives outside the repo.
+  const hasOwnDemo = Boolean(demo && demo.includes('/demo/'));
+
+  if (isRunnable && !hasOwnDemo) {
     tabs.push({
       id: 'run',
       label: 'Run in Browser',

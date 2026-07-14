@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
+    "demos": "node scripts/build-demos.mjs",
+    "prebuild": "node scripts/build-demos.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rm -rf .next out"
+    "clean": "rm -rf .next out public/demo demo-engine/out"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
