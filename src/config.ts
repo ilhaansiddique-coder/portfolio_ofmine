@@ -53,9 +53,9 @@ export const config = {
       'HRM_IlhaanSq',
     ] as string[],
 
-    // Repo names to hide from the site. Only this portfolio's own repo is
-    // hidden — every other public repo is imported and shown.
-    exclude: ['portfolio_ofmine'] as string[],
+    // Repo names to hide from the site. Everything else is imported and shown.
+    // 'tireshop' is the older version — 'new_tireshop_dc' (kept) has a live demo.
+    exclude: ['portfolio_ofmine', 'tireshop'] as string[],
 
     // Show everything, including forks and archived repos.
     hideForks: false,
