@@ -3,7 +3,16 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  # Allow manual runs from the Actions tab (also re-syncs latest GitHub repos).
+
+  # Rebuild on a schedule so NEW repos you create on GitHub show up as project
+  # cards automatically. The site is a static export — repos are fetched at
+  # build time — so it must rebuild to pick up changes. Runs every 6 hours.
+  # (GitHub pauses cron on repos with no activity for 60 days; a push or a
+  # manual run re-enables it.)
+  schedule:
+    - cron: '0 */6 * * *'
+
+  # Allow manual runs from the Actions tab — use this to re-sync immediately.
   workflow_dispatch:
 
 # Allow this workflow to deploy to Pages.
