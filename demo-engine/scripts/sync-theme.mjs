@@ -80,6 +80,23 @@ for (const [file, { title, exports }] of Object.entries(OPTIONAL_SLOTS)) {
   generated.push(file);
 }
 
+// The /brand/[slug] route enumerates its static pages from the theme's own
+// brand list (a theme can define more brands than the mock catalogue mentions;
+// Shopkart lists 8, only 4 of which own products). The engine imports that list
+// from @theme/components/brands, so guarantee the module exists — themes without
+// a brand concept (e.g. the cd-ecom theme) get an empty list.
+const brandsFile = resolve(DEST, "components/brands.ts");
+if (!existsSync(brandsFile)) {
+  mkdirSync(resolve(DEST, "components"), { recursive: true });
+  writeFileSync(
+    brandsFile,
+    `// Auto-generated: this theme has no brand list.\n` +
+      `export interface Brand { slug: string; name?: string }\n` +
+      `export const BRANDS: Brand[] = [];\n`,
+  );
+  generated.push("components/brands.ts (empty)");
+}
+
 /**
  * Themes hardcode their art as root-absolute paths, e.g. src="/categories/honey.png".
  * Two things break that here:

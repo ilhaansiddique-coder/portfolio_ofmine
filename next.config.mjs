@@ -23,6 +23,20 @@ const nextConfig = {
     // GitHub Pages has no image optimization server.
     unoptimized: true,
   },
+  // The theme/app demos in public/demo/<slug>/ are prebuilt static sites. A
+  // static host (GitHub Pages) serves `/demo/x/` -> `/demo/x/index.html`
+  // automatically, but `next dev` does not, so every demo link 404s locally.
+  // This rewrite restores that directory-index behaviour for dev. It is not
+  // needed (and not supported) with `output: 'export'`, so it's dev-only.
+  ...(isDev
+    ? {
+        async rewrites() {
+          return [
+            { source: '/demo/:path*/', destination: '/demo/:path*/index.html' },
+          ];
+        },
+      }
+    : {}),
 };
 
 export default nextConfig;

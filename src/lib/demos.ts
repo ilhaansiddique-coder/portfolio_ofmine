@@ -14,6 +14,12 @@ const DEMO_SLUGS: Record<string, string> = {
   theme_template_ecom: 'cd-ecom',
   'theme_like_ghorerbazar-ecom': 'shopkart',
   yangkedu_ecom_theme_template: 'yangkedu',
+  // A full-stack app rebuilt as a browse-only storefront demo (its DB/auth
+  // layer is swapped for seeded mock data — see scripts/build-demos.mjs).
+  'hobbymartbd-ecom-drone': 'hobbymart',
+  // A static tyre-shop site whose live EonTyre API is replaced by seeded mock
+  // tyres, with the React/Babel CDN libs vendored for a self-contained demo.
+  new_tireshop_dc: 'tireshop',
 };
 
 /** The live storefront for a repo, or null if it doesn't have one. */
