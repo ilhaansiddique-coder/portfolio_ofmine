@@ -21,6 +21,17 @@ export const asset = (path: string) =>
   `${BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`;
 
 export const config = {
+  // --- OWNER MODE (private project visibility) ---------------
+  // Per-project hide/show toggles are gated behind "owner mode".
+  // Unlock it on any device by visiting the site once with your PIN:
+  //   https://your-site/?owner=change-this-pin
+  // It's stored in that browser's localStorage, so you stay unlocked.
+  // This is only a SOFT gate for a cosmetic control, so the PIN does
+  // not need to be a real secret — but change it from the default.
+  owner: {
+    pin: '464966',
+  },
+
   // --- WHO YOU ARE -------------------------------------------
   name: 'Ilhaan Siddique',
   // Short logo/wordmark shown in the navbar & footer.
@@ -56,6 +67,14 @@ export const config = {
     // Repo names to hide from the site. Everything else is imported and shown.
     // 'tireshop' is the older version — 'new_tireshop_dc' (kept) has a live demo.
     exclude: ['portfolio_ofmine', 'tireshop'] as string[],
+
+    // Repo names hidden from EVERYONE at build time — the "permanent /
+    // public" hide. Unlike `exclude`, this list is what the owner-mode
+    // "Copy hidden list" button generates: toggle projects off in the
+    // browser, click copy, paste the result here, then redeploy to make
+    // those projects invisible to the public. Removed from the site
+    // entirely (cards + detail pages), just like `exclude`.
+    hidden: [] as string[],
 
     // GitHub reports a repo's "primary language" by counting bytes, which can
     // misrepresent a project. ecom-futurebd is a Laravel app, but its React
@@ -262,13 +281,6 @@ export const config = {
       description:
         'Iterate from real use: polish UX, tighten security, add reporting and improve speed where it matters.',
     },
-  ],
-
-  proof: [
-    { value: '24+', label: 'Public projects' },
-    { value: '4', label: 'Featured case studies' },
-    { value: 'Full-stack', label: 'Web, backend, mobile' },
-    { value: 'Daily', label: 'GitHub practice' },
   ],
 
   // --- SOCIAL / CONTACT --------------------------------------

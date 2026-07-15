@@ -59,6 +59,7 @@ export default async function Home() {
         <Hero
           user={user}
           repoCount={repos.length}
+          repoNames={repos.map((r) => r.name)}
           totalStars={totalStars}
           stack={stack}
           domains={domains}

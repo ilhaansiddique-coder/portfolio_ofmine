@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 import type { Repo } from '@/lib/github';
 import { config } from '@/config';
+import { useVisibility } from '@/lib/visibility';
 import { SectionHeading } from './Section';
 import ProjectCard from './ProjectCard';
 
@@ -29,18 +30,21 @@ export default function Projects({ repos }: { repos: Repo[] }) {
   }, [repos]);
 
   const [filter, setFilter] = useState('All');
+  const { hidden } = useVisibility();
 
-  const visible = useMemo(
-    () =>
+  const visible = useMemo(() => {
+    const byLang =
       filter === 'All'
         ? repos
         : filter === 'PHP'
           ? repos.filter((r) => r.language === 'PHP' || r.name.toLowerCase().includes('php'))
           : filter === 'Laravel'
             ? repos.filter((r) => r.language === 'Laravel' || r.name.toLowerCase().includes('laravel'))
-            : repos.filter((r) => r.language === filter),
-    [repos, filter]
-  );
+            : repos.filter((r) => r.language === filter);
+    // Visibility is controlled from the /ilsq console; the home page just
+    // reflects it. Projects hidden there drop out here too.
+    return byLang.filter((r) => !hidden.includes(r.name));
+  }, [repos, filter, hidden]);
 
   return (
     <section id="projects" className="scroll-mt-24 py-16">

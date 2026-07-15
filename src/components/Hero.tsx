@@ -5,18 +5,22 @@ import { motion } from 'framer-motion';
 import { ArrowDown, Github, Star, FolderGit2, Download } from 'lucide-react';
 import { config } from '@/config';
 import type { GitHubUser } from '@/lib/github';
+import { useVisibility } from '@/lib/visibility';
 import avatarImg from '@/images/newupdatedimageofmine.png';
 import CodeTyping from './CodeTyping';
 
 export default function Hero({
   user,
   repoCount,
+  repoNames,
   totalStars,
   stack,
   domains,
 }: {
   user: GitHubUser | null;
   repoCount: number;
+  /** Names of the built repos, used to keep the count in step with the grid. */
+  repoNames: string[];
   totalStars: number;
   /** Languages present across the real repos — typed into the code block. */
   stack: string[];
@@ -25,6 +29,14 @@ export default function Hero({
 }) {
   const avatar = avatarImg.src;
   const name = config.name || user?.name || user?.login || 'Developer';
+
+  // Projects hidden from the /ilsq console (this browser) drop out of the
+  // grid, so subtract them here too — the stat and typed count stay in sync
+  // with what's actually shown. Public visitors hide nothing, so they see the
+  // full build count.
+  const { hidden } = useVisibility();
+  const shownCount =
+    repoCount - repoNames.filter((n) => hidden.includes(n)).length;
 
   return (
     <section
@@ -134,7 +146,7 @@ export default function Hero({
         className="mt-16 w-full"
       >
         <CodeTyping
-          projectCount={repoCount}
+          projectCount={shownCount}
           stack={stack}
           domains={domains}
         />
@@ -143,7 +155,7 @@ export default function Hero({
       {/* STATS — separate centered section */}
       <StatsBar
         user={user}
-        repoCount={repoCount}
+        repoCount={shownCount}
         totalStars={totalStars}
       />
 

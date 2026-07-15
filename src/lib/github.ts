@@ -124,13 +124,18 @@ export async function fetchRepos(): Promise<Repo[]> {
   const { username, featured, exclude, hideForks, hideArchived, maxProjects } =
     config.github;
   const languageOverrides = config.github.languageOverrides ?? {};
+  // Projects hidden from the public at build time (owner-mode "Copy hidden
+  // list" feeds this). Folded in with `exclude` so they never ship.
+  const hidden = config.github.hidden ?? [];
 
   const raw = await ghJSON<any[]>(
     `${GH_API}/users/${username}/repos?per_page=100&sort=updated`
   );
   if (!raw) return [];
 
-  const excludeSet = new Set(exclude.map((n) => n.toLowerCase()));
+  const excludeSet = new Set(
+    [...exclude, ...hidden].map((n) => n.toLowerCase())
+  );
   const featuredSet = new Set(featured.map((n) => n.toLowerCase()));
 
   const repos: Repo[] = raw

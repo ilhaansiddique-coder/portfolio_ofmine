@@ -14,11 +14,14 @@ import {
 import { fetchRepos, fetchRepoDetail } from '@/lib/github';
 import { deriveInsight, prettyName } from '@/lib/enrich';
 import { buildLiveTabs, thumbnailFor } from '@/lib/preview';
+import { previewFor } from '@/lib/previews';
 import { config } from '@/config';
 import LanguageBar from '@/components/LanguageBar';
 import LiveProject from '@/components/LiveProject';
+import ProjectPreview from '@/components/ProjectPreview';
 import ProjectCover from '@/components/ProjectCover';
 import Readme from '@/components/Readme';
+import VisibilityGuard from '@/components/VisibilityGuard';
 
 // Pre-render one static page per repo at build time.
 export async function generateStaticParams() {
@@ -62,6 +65,7 @@ export default async function ProjectPage({
   const liveTabs = buildLiveTabs(repo, languages, insight.demo);
 
   return (
+    <VisibilityGuard name={repo.name}>
     <main className="relative min-h-screen overflow-x-hidden pb-24">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
       <div className="relative mx-auto max-w-4xl px-5 pt-10 sm:px-8">
@@ -120,37 +124,50 @@ export default async function ProjectPage({
           </div>
         </header>
 
-        {/* Live, rendered project */}
-        <section className="mt-10">
-          <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-slate-400">
-            Live preview
-          </h2>
-          {liveTabs.length > 0 ? (
-            <LiveProject tabs={liveTabs} title={insight.title} />
-          ) : (
-            <div className="overflow-hidden rounded-2xl border border-line bg-card">
-              <img
-                src={thumbnailFor(repo)}
-                alt={`${insight.title} preview`}
-                className="w-full"
-              />
-              <p className="border-t border-line px-4 py-3 text-xs text-slate-400">
-                This project can&apos;t be booted live in the browser (e.g. a
-                native/mobile app or a non-web stack). Explore the README below
-                or{' '}
-                <a
-                  href={repo.htmlUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-neon hover:underline"
-                >
-                  view the code on GitHub
-                </a>
-                .
-              </p>
-            </div>
-          )}
-        </section>
+        {/* Live, rendered project — an in-browser demo when we host one,
+            otherwise a standardized preview (real screenshot / labelled mockup /
+            coming-soon) so every project shows what it is. */}
+        {(() => {
+          const preview = previewFor(repo.name);
+          return (
+            <section className="mt-10">
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-slate-400">
+                {liveTabs.length > 0 ? 'Live preview' : 'Preview'}
+              </h2>
+              {liveTabs.length > 0 ? (
+                <LiveProject tabs={liveTabs} title={insight.title} />
+              ) : preview ? (
+                <ProjectPreview
+                  preview={preview}
+                  imageUrl={preview.imageUrl}
+                  title={insight.title}
+                  liveUrl={insight.demo}
+                  codeUrl={repo.htmlUrl}
+                />
+              ) : (
+                <div className="overflow-hidden rounded-2xl border border-line bg-card">
+                  <img
+                    src={thumbnailFor(repo)}
+                    alt={`${insight.title} preview`}
+                    className="w-full"
+                  />
+                  <p className="border-t border-line px-4 py-3 text-xs text-slate-400">
+                    Explore the README below or{' '}
+                    <a
+                      href={repo.htmlUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-neon hover:underline"
+                    >
+                      view the code on GitHub
+                    </a>
+                    .
+                  </p>
+                </div>
+              )}
+            </section>
+          );
+        })()}
 
         {/* Insight grid */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -219,5 +236,6 @@ export default async function ProjectPage({
 
       </div>
     </main>
+    </VisibilityGuard>
   );
 }

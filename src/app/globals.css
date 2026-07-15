@@ -85,6 +85,27 @@ body {
   }
 }
 
+/* README rendering: Tailwind's Preflight sets every <img> to display:block,
+   which stacks a shields.io badge row (e.g. Laravel · PHP · React) vertically.
+   Flow grouped images inline so they read as a row; keep a lone image (a
+   screenshot) as a centered, framed block. */
+.prose img {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0.2rem 0.3rem;
+}
+.prose p img:only-child {
+  display: block;
+  margin: 1.5rem auto;
+}
+/* Grouped badges: drop the screenshot frame so each shield isn't double-boxed. */
+.prose p img:not(:only-child) {
+  border: 0;
+  border-radius: 0;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
