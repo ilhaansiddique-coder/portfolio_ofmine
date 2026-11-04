@@ -6,7 +6,6 @@ import { ArrowDown, ArrowUpRight, Boxes, Github, Search, ShoppingBag, X } from '
 import type { Repo } from '@/lib/github';
 import { config } from '@/config';
 import { deriveCategory, prettyName } from '@/lib/enrich';
-import { demoUrl } from '@/lib/demos';
 import { useVisibility } from '@/lib/visibility';
 
 const groupFor = (repo: Repo) => {
@@ -89,7 +88,6 @@ function FeaturedProject({ repo, index }: { repo: Repo; index: number }) {
 function LibraryCard({ repo, index }: { repo: Repo; index: number }) {
   const copy = config.projectOverrides[repo.name];
   const title = copy?.title ?? prettyName(repo.name);
-  const demo = demoUrl(repo.name) ?? (repo.homepage?.startsWith('http') ? repo.homepage : null);
   const tags = copy?.skills?.slice(0, 3) ?? (repo.topics.length ? repo.topics.slice(0, 3) : [repo.language ?? 'Source on GitHub']);
   return (
     <article className="library-card group flex flex-col rounded-2xl border border-white/10 p-6 sm:p-7">
@@ -97,7 +95,7 @@ function LibraryCard({ repo, index }: { repo: Repo; index: number }) {
       <h4 className="text-xl font-medium leading-7 tracking-tight text-white"><Link href={`/projects/${repo.name}`} className="transition hover:text-blue-300">{title}</Link></h4>
       <p className="mb-6 mt-3 line-clamp-3 text-sm leading-6 text-slate-400">{copy?.tagline ?? repo.description ?? `Explore the ${prettyName(repo.name)} implementation and source code.`}</p>
       <div className="mb-7 mt-auto flex flex-wrap gap-1.5">{tags.map((tag) => <span key={tag} className="portfolio-tag">{tag}</span>)}</div>
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] pt-5"><Link href={`/projects/${repo.name}`} className="inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white">Case study <ArrowUpRight size={14} /></Link><div className="flex items-center gap-4">{demo && <a href={demo} target="_blank" rel="noreferrer" className="text-xs text-blue-300 hover:text-white">Live demo ↗</a>}<a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${title} source on GitHub`} className="text-slate-500 hover:text-white"><Github size={16} /></a></div></div>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] pt-5"><Link href={`/projects/${repo.name}`} className="inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white">Case study <ArrowUpRight size={14} /></Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${title} source on GitHub`} className="text-slate-500 hover:text-white"><Github size={16} /></a></div>
     </article>
   );
 }
