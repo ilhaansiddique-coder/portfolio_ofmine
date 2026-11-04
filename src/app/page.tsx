@@ -1,12 +1,10 @@
 import { fetchRepos, fetchUser } from '@/lib/github';
-import { fetchContributions } from '@/lib/contributions';
 import { deriveCategory } from '@/lib/enrich';
 import { config } from '@/config';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Services from '@/components/Services';
-import Contributions from '@/components/Contributions';
 import Workflow from '@/components/Workflow';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
@@ -14,10 +12,9 @@ import Footer from '@/components/Footer';
 
 export default async function Home() {
   // These run at BUILD time (static export) — the data is baked in.
-  const [user, repos, contributions] = await Promise.all([
+  const [user, repos] = await Promise.all([
     fetchUser(),
     fetchRepos(),
-    fetchContributions(),
   ]);
 
   const totalStars = repos.reduce((sum, r) => sum + r.stars, 0);
@@ -64,12 +61,13 @@ export default async function Home() {
           stack={stack}
           domains={domains}
         />
-        <About user={user} />
-        <Services />
-        <Contributions data={contributions} />
-        <Workflow />
-        <Projects repos={repos} />
-        <Contact />
+        <div className="saas-content">
+          <Projects repos={repos} />
+          <About user={user} />
+          <Services />
+          <Workflow />
+          <Contact />
+        </div>
       </div>
       <Footer />
     </main>

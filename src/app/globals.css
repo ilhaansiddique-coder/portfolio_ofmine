@@ -120,3 +120,165 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3a3a5e;
 }
+
+/* Scoped to sections below the hero; preserve the introduction's styling. */
+.saas-content {
+  position: relative;
+  isolation: isolate;
+}
+.saas-content::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 48rem 38rem at 3% 5%, #7c5cff26, transparent 75%),
+    radial-gradient(ellipse 42rem 45rem at 98% 24%, #22d3ee15, transparent 75%),
+    radial-gradient(ellipse 48rem 38rem at 5% 53%, #7c5cff22, transparent 75%),
+    radial-gradient(ellipse 42rem 38rem at 95% 74%, #22d3ee18, transparent 75%),
+    radial-gradient(ellipse 42rem 30rem at 50% 100%, #7c5cff24, transparent 75%),
+    #090914;
+  border-top: 1px solid #a78bfa26;
+}
+.saas-content > section + section {
+  border-top: 1px solid #a78bfa20;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.saas-content .text-neon { color: #b5a0ff; }
+.saas-content .text-neon-cyan { color: #67e8f9; }
+.saas-content .bg-card {
+  background: radial-gradient(ellipse at 0% 0%, #7c5cff16, transparent 70%), linear-gradient(145deg, #171626, #10101d);
+  box-shadow: inset 0 1px 0 #ffffff08, 0 12px 45px -28px #7c5cff40;
+}
+.saas-content .border-line { border-color: #a78bfa26; }
+.saas-content .card-hover:hover {
+  transform: translateY(-4px);
+  border-color: #a78bfa80;
+  box-shadow: 0 12px 45px -18px #7c5cff50, inset 0 1px 0 #ffffff12;
+}
+.saas-content .chip { border-radius: 0.5rem; background: #7c5cff0c; border-color: #a78bfa2b; }
+.saas-content .bg-gradient-to-r { background-image: linear-gradient(to right, #7c5cff, #22d3ee); box-shadow: 0 0 20px #7c5cff55; }
+.saas-content .btn-primary { background: linear-gradient(110deg, #7c5cff, #6251dd); box-shadow: 0 4px 24px #7c5cff35; }
+.saas-content .btn { border-radius: 0.75rem; }
+.saas-content .btn-ghost:hover { background: #7c5cff15; box-shadow: 0 0 22px #7c5cff15; }
+
+.portfolio-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #bdb1ed;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+.portfolio-eyebrow > span {
+  height: 0.35rem;
+  width: 0.35rem;
+  border-radius: 100%;
+  background: #67e8f9;
+  box-shadow: 0 0 12px #22d3ee99;
+}
+.featured-project {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #a78bfa40;
+  border-radius: 1.5rem;
+  background: linear-gradient(145deg, #1d1932, #10101e 65%);
+  box-shadow: 0 16px 60px -30px #7c5cff45, inset 0 1px 0 #ffffff12;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+.featured-project:hover {
+  transform: translateY(-4px);
+  border-color: #a78bfa88;
+  box-shadow: 0 20px 65px -24px #7c5cff60;
+}
+.featured-inventory > div:first-child {
+  background: radial-gradient(ellipse at 85% 10%, #22d3ee42, transparent 60%), radial-gradient(ellipse at 10% 90%, #7c5cff55, transparent 75%), linear-gradient(130deg, #1c2142, #10182b);
+}
+.featured-commerce > div:first-child {
+  background: radial-gradient(ellipse at 85% 10%, #e879f93d, transparent 60%), radial-gradient(ellipse at 10% 90%, #7c5cff66, transparent 75%), linear-gradient(130deg, #302044, #17142e);
+}
+.project-orbit {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  right: -7rem;
+  top: -9rem;
+  border: 1px solid #c4b5fd40;
+  border-radius: 50%;
+  box-shadow: 0 0 24px #a78bfa18, 0 0 0 40px #c4b5fd08, 0 0 0 80px #c4b5fd06, 0 0 0 120px #c4b5fd04;
+  pointer-events: none;
+}
+.portfolio-tag {
+  border: 1px solid #a78bfa26;
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.55rem;
+  background: #7c5cff0c;
+  color: #c7bfdf;
+  font-size: 0.65rem;
+  line-height: 1.4;
+}
+.library-card {
+  position: relative;
+  background: radial-gradient(ellipse at 100% 0%, #7c5cff16, transparent 65%), linear-gradient(145deg, #171527, #10101c);
+  border-color: #a78bfa2b;
+  box-shadow: inset 0 1px 0 #ffffff08;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+.library-card::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  top: -1px;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #a78bfa88, transparent);
+}
+.library-card:nth-child(3n + 2) {
+  background: radial-gradient(ellipse at 100% 0%, #22d3ee12, transparent 65%), linear-gradient(145deg, #131a27, #10101c);
+}
+.library-card:nth-child(3n + 2)::before { background: linear-gradient(90deg, transparent, #22d3ee77, transparent); }
+.library-card:nth-child(3n + 3)::before { background: linear-gradient(90deg, transparent, #e879f966, transparent); }
+.library-card:hover {
+  transform: translateY(-4px);
+  border-color: #a78bfa80;
+  box-shadow: 0 12px 40px -18px #7c5cff50, inset 0 1px 0 #ffffff12;
+}
+.bloom-text {
+  background: linear-gradient(105deg, #c4b5fd, #a5b4fc 45%, #67e8f9);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.saas-content .section-title { text-shadow: 0 0 35px #a78bfa26; }
+.saas-content #services article > div:first-child {
+  background: linear-gradient(135deg, #7c5cff30, #22d3ee0d);
+  box-shadow: 0 0 25px #7c5cff20, inset 0 1px 0 #ffffff12;
+}
+.saas-content #workflow article > div:first-child > span {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: #7c5cff18;
+  border: 1px solid #a78bfa35;
+  box-shadow: 0 0 20px #7c5cff20;
+}
+.saas-content #contact > div:nth-child(2) { border-color: #a78bfa50; box-shadow: 0 0 80px -35px #7c5cff66, inset 0 1px 0 #ffffff12; }
+.saas-content input, .saas-content textarea { transition: border-color 180ms ease, box-shadow 180ms ease; }
+.saas-content input:focus, .saas-content textarea:focus { border-color: #a78bfa99; box-shadow: 0 0 25px #7c5cff18; }
+.saas-content [aria-label="Filter projects"] button[aria-pressed="true"] {
+  color: white;
+  background: linear-gradient(110deg, #7c5cff, #5a47cd);
+  border-color: #a78bfa88;
+  box-shadow: 0 0 22px #7c5cff33;
+}
+@media (prefers-reduced-motion: reduce) {
+  .saas-content .card-hover:hover, .featured-project:hover, .library-card:hover { transform: none; }
+}

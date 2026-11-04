@@ -140,6 +140,10 @@ export async function fetchRepos(): Promise<Repo[]> {
 
   const repos: Repo[] = raw
     .filter((r) => !excludeSet.has(r.name.toLowerCase()))
+    // Reserved repositories are not finished work. Keep the known chat
+    // project even if GitHub's size metadata has not caught up yet.
+    .filter((r) => !/planned|reserved|implementation not yet published/i.test(r.description ?? ''))
+    .filter((r) => r.size > 0 || r.name === 'chat_application_multi_room_with_django')
     .filter((r) => (hideForks ? !r.fork : true))
     .filter((r) => (hideArchived ? !r.archived : true))
     .map((r) => ({

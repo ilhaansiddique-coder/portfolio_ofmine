@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import { config } from '@/config';
 import type { GitHubUser } from '@/lib/github';
@@ -15,13 +14,7 @@ export default function About({ user }: { user: GitHubUser | null }) {
       <SectionHeading eyebrow="Get to know me" title="About Me" />
 
       <div className="grid gap-10 md:grid-cols-5">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5 }}
-          className="md:col-span-3"
-        >
+        <div className="md:col-span-3">
           <p className="text-lg leading-relaxed text-slate-300">{bio}</p>
 
           {location ? (
@@ -29,15 +22,9 @@ export default function About({ user }: { user: GitHubUser | null }) {
               <MapPin size={16} className="text-neon" /> {location}
             </p>
           ) : null}
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="md:col-span-2"
-        >
+        <div className="md:col-span-2">
           <h3 className="mb-4 font-mono text-sm uppercase tracking-wider text-slate-400">
             Tech I work with
           </h3>
@@ -51,7 +38,7 @@ export default function About({ user }: { user: GitHubUser | null }) {
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

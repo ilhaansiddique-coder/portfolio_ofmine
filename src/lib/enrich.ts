@@ -100,6 +100,10 @@ function timeAgo(iso: string): string {
  * mismatch).
  */
 export function deriveCategory(repo: Repo): string {
+  const category = config.projectOverrides[repo.name]?.category;
+  if (category) return category;
+  if (repo.language === 'Dart' || /flutter|androidapp/i.test(repo.name)) return 'Mobile App';
+  if (/theme|template/i.test(repo.name)) return 'UI / Theme';
   const haystack = [repo.name, repo.description ?? '', ...repo.topics]
     .join(' ')
     .toLowerCase();
@@ -117,7 +121,7 @@ export function deriveInsight(
 
   // --- category + descriptive phrase from signals ---
   const matched = SIGNALS.filter((s) => s.test(haystack));
-  const category = matched[0]?.category ?? 'Web App';
+  const category = deriveCategory(repo);
   const phrases = matched.map((m) => m.phrase).filter(Boolean) as string[];
 
   // --- skills: signals + languages, de-duped, ordered ---
@@ -155,7 +159,7 @@ export function deriveInsight(
   const highlights = override.highlights ?? buildHighlights(repo, languages);
 
   return {
-    title: prettyName(repo.name),
+    title: override.title ?? prettyName(repo.name),
     category,
     tagline,
     summary,

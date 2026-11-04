@@ -14,6 +14,9 @@ const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
 const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig = {
+  // Keep the live preview independent from production builds. Sharing .next
+  // lets `next build` replace the CSS/chunks used by an active dev server.
+  distDir: isDev ? '.next-dev' : '.next',
   // Produce a fully static site in ./out for GitHub Pages (build only).
   ...(isDev ? {} : { output: 'export' }),
   basePath,

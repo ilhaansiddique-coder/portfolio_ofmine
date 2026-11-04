@@ -17,7 +17,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next-dev/types/**/*.ts"],
   // demo-engine is a self-contained Next.js sub-project with its own tsconfig
   // and path aliases; home.tsx is a stray file from a storefront project.
   // Neither belongs to the portfolio — typechecking them from here fails on

@@ -43,8 +43,8 @@ export const config = {
     'I build production-ready web apps, SaaS dashboards, backend systems and mobile-ready experiences with Next.js, TypeScript, PostgreSQL and modern deployment workflows.',
   // A longer paragraph for the About section.
   about:
-    "I'm Ilhaan Siddique, a full-stack developer focused on practical product engineering: polished interfaces, secure authentication, database-backed dashboards, SaaS architecture and mobile-first user experiences. " +
-    "The work below is pulled straight from my GitHub and shaped into case studies so you can inspect the code, the product decisions and the technical depth behind each build.",
+    "I build account-based products with Next.js, TypeScript and PostgreSQL, focusing on tenant-isolated workspaces, persistent identity and maintainable business workflows. " +
+    "My selected work connects product interfaces to the systems behind them: HR domain modules, authentication, relational data and Docker-based deployment tooling.",
   // Optional: path to a photo placed in /public (e.g. '/avatar.jpg').
   // Leave empty to use your GitHub avatar automatically.
   avatar: '/newupdatedimageofmine.png',
@@ -58,10 +58,11 @@ export const config = {
     // Repo names to pin to the front, in this order. Optional.
     // e.g. ['my-cool-app', 'algo-visualizer']
     featured: [
-      'hobbymartbd-ecom-drone',
-      'mega_auth_nextjs_postgresql',
-      'yangkedu_ecom_theme_template',
+      'sales_IMS_with_hrm_n_accounts',
+      'ecom-akhyanbd',
       'HRM_IlhaanSq',
+      'chat_application_multi_room_with_django',
+      'hobbymartbd-ecom-drone',
     ] as string[],
 
     // Repo names to hide from the site. Everything else is imported and shown.
@@ -107,7 +108,33 @@ export const config = {
   //   demo: 'https://your-live-demo.com',
   // },
   projectOverrides: {
+    'sales_IMS_with_hrm_n_accounts': {
+      title: 'Inventory SaaS',
+      category: 'Business SaaS',
+      tagline: 'Sales, inventory, HR and accounts in one business platform.',
+      summary: 'An integrated business management platform connecting inventory and sales with HR and accounting workflows. A single product surface brings the day-to-day operations of a business together.',
+      skills: ['Inventory Management', 'Sales', 'HR Management', 'Accounting'],
+      highlights: ['Inventory management workflows', 'Sales operations', 'HR management', 'Connected accounting modules'],
+    },
+    'ecom-akhyanbd': {
+      title: 'Akhyan SaaS Commerce',
+      category: 'SaaS Commerce',
+      tagline: 'A SaaS commerce experience connecting storefront, operations and real-time updates.',
+      summary: 'A SaaS e-commerce product with a Next.js 16 and TypeScript storefront connected to a Laravel 13 REST API. MySQL stores commerce data, Sanctum authenticates customers and administrators, and Laravel Reverb powers real-time updates. Product, order and promotion management come together in the admin dashboard.',
+      skills: ['Next.js', 'TypeScript', 'Laravel', 'MySQL', 'Sanctum', 'WebSockets'],
+      highlights: ['Decoupled Next.js and Laravel architecture', 'Admin and customer dashboards', 'Real-time updates with Laravel Reverb', 'Orders, promotions and PDF invoices'],
+    },
+    'chat_application_multi_room_with_django': {
+      title: 'Real-Time Secure Chat Application',
+      category: 'Real-Time Systems',
+      tagline: 'Authenticated multi-room messaging with Django Channels, Redis and PostgreSQL.',
+      summary: 'A multi-room chat application using Django Channels and Daphne for asynchronous WebSocket connections. Redis distributes room broadcasts, while PostgreSQL stores messages before delivery. Session authentication, origin checks and server-side message validation protect the messaging flow. The repository documents the implementation; runtime verification remains pending.',
+      skills: ['Django', 'Django Channels', 'WebSockets', 'Redis', 'PostgreSQL', 'Daphne'],
+      highlights: ['Session-authenticated WebSocket connections', 'Redis-backed room broadcasts', 'PostgreSQL message persistence', 'Origin checks and validated message input'],
+    },
     'HRM_IlhaanSq': {
+      title: 'Multi-Tenant HR Management SaaS',
+      category: 'Business SaaS',
       tagline:
         'A commercial-grade, multi-tenant HR Management SaaS covering the full employee lifecycle.',
       summary:
@@ -121,13 +148,14 @@ export const config = {
         'TypeScript',
         'PostgreSQL',
         'Multi-tenant SaaS',
+        'Role-based access control',
         'Docker',
         'Authentication',
         'Payroll Logic',
       ],
       highlights: [
         'Multi-tenant, tenant-isolated workspaces',
-        'Full HR suite: employees, attendance, leave, payroll, performance, recruitment',
+        'Admin, HR and employee permissions',
         'PostgreSQL data layer with PLpgSQL',
         'Dockerized for deployment',
         'Modular, domain-driven architecture',
@@ -157,17 +185,19 @@ export const config = {
     },
     'hobbymartbd-ecom-drone': {
       tagline:
-        'An e-commerce storefront for a hobby & drone shop, built with Next.js.',
+        'A Next.js commerce platform with PostgreSQL, Auth.js and Redis caching.',
       summary:
         'HobbyMart BD is an e-commerce storefront for a hobby and drone retailer, built with Next.js, ' +
-        'TypeScript and a custom-styled UI. It focuses on a clean, responsive shopping experience for ' +
-        'browsing and presenting products.',
+        'TypeScript, Prisma and PostgreSQL. Auth.js handles account authentication and Redis supports caching, ' +
+        'connecting the responsive storefront to persistent product data and backend services.',
       skills: [
         'Next.js',
         'TypeScript',
         'React',
         'Tailwind CSS',
         'E-commerce',
+        'PostgreSQL',
+        'Redis',
         'Responsive UI',
       ],
       highlights: [
@@ -201,6 +231,8 @@ export const config = {
   } as Record<
     string,
     {
+      title?: string;
+      category?: string;
       tagline?: string;
       summary?: string;
       skills?: string[];
@@ -231,22 +263,22 @@ export const config = {
 
   services: [
     {
-      title: 'Full-Stack Web Apps',
+      title: 'Interactive Product Interfaces',
       description:
         'Responsive, production-style web applications with React, Next.js, TypeScript, API integration and clean component architecture.',
       skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
     },
     {
-      title: 'SaaS & Dashboards',
+      title: 'Multi-Tenant SaaS & Access',
       description:
         'Tenant-aware admin panels, role-based access, data tables, reports, exports and business workflows backed by PostgreSQL.',
       skills: ['PostgreSQL', 'Prisma', 'Auth', 'RBAC'],
     },
     {
-      title: 'Android & Mobile Apps',
+      title: 'Authentication & Data Systems',
       description:
-        'Mobile-first product experiences, Android-ready interfaces and app flows connected to real backend services and APIs.',
-      skills: ['Android', 'Mobile UI', 'APIs', 'Offline-ready UX'],
+        'Account registration, login and session flows backed by relational data models, with clear boundaries between the interface and server logic.',
+      skills: ['Next.js', 'PostgreSQL', 'Sessions', 'API Design'],
     },
     {
       title: 'Backend & Deployment',
