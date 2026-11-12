@@ -1,5 +1,34 @@
 # 🚀 Deployment Runbook
 
+## Coolify (Docker Compose)
+
+The repository includes `docker-compose.yaml` at its root, matching Coolify's
+default `/docker-compose.yaml` location. Use branch `main`, base directory `/`,
+and the **Docker Compose** build pack. After fetching the Compose file, assign
+your domain to the `portfolio` service on internal port **80**, then deploy.
+No host port mapping is required; Coolify's proxy routes requests to the service.
+
+Set `NEXT_PUBLIC_BASE_URL` to your final portfolio URL before building so metadata
+uses your domain. This deployment serves the existing static export with Nginx;
+the contact form opens the visitor's email application. It does not run Next.js
+API routes or require a database. HTML is revalidated normally; hashed Next.js
+assets receive long-lived caching.
+
+The container build skips the standalone storefront demo builds, which clone
+separate repositories. Those `/demo/` pages are not included in this image.
+The portfolio and project case studies are included. GitHub project data is
+fetched at build time, so redeploy to refresh it.
+
+For a local Docker verification:
+
+```bash
+docker compose -f docker-compose.yaml config
+docker compose -f docker-compose.yaml build
+docker compose -f docker-compose.yaml up -d
+```
+
+---
+
 This portfolio is a **static site** → **GitHub Pages**. Your individual
 projects are shown live in three ways:
 
