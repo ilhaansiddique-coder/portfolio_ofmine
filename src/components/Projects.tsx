@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight, Github, Search, Layers3, Database, Radio, Smartphone, PanelsTopLeft } from 'lucide-react';
 import { config, asset } from '@/config';
 import type { Repo } from '@/lib/github';
 import { deriveCategory, prettyName } from '@/lib/enrich';
@@ -21,6 +22,14 @@ const selectedImages: Record<string, string> = {
   'ecom-akhyanbd': 'ecom-akhyanbd',
 };
 const titleFor = (repo: Repo) => config.projectOverrides[repo.name]?.title ?? prettyName(repo.name);
+const categoryIcon = (repo: Repo) => {
+  const category = deriveCategory(repo);
+  if (/mobile/i.test(category)) return Smartphone;
+  if (/real.time/i.test(category)) return Radio;
+  if (/commerce/i.test(category)) return PanelsTopLeft;
+  if (/saas|dashboard/i.test(category)) return Database;
+  return Layers3;
+};
 
 export default function Projects({ repos }: { repos: Repo[] }) {
   const { hidden } = useVisibility();
@@ -36,32 +45,44 @@ export default function Projects({ repos }: { repos: Repo[] }) {
   return (
     <section id="projects" className="scroll-mt-24">
       <header className="work-header">
-        <div><h2>Selected projects</h2><p>Commerce, business software and real-time applications. The interfaces, the decisions and the source behind my work.</p></div>
-        <a href="#project-library">Browse {published.length} projects</a>
+        <div><h2>Software with<br />a business behind it.</h2><p>From the first screen to the data behind it. Explore my work across commerce, business platforms and real-time applications.</p></div>
+        <a href="#project-library">Explore all {published.length} projects <ArrowUpRight size={18} aria-hidden="true" /></a>
       </header>
       <div className="selected-work">
-        {featured.map((repo) => {
+        {featured.map((repo, index) => {
           const copy = config.projectOverrides[repo.name];
-          return <article key={repo.id}>
-            <figure>
+          return <article key={repo.id} className={`showcase showcase-${index + 1}`}>
+            <div className="showcase-copy">
+              <div className="showcase-meta"><span>{deriveCategory(repo)}</span><span>0{index + 1}</span></div>
+              <h3><Link href={`/projects/${repo.name}`}>{titleFor(repo)}</Link></h3>
+              <p>{copy?.tagline ?? repo.description}</p>
+              <ul className="showcase-details">{copy?.highlights?.slice(0, 3).map((item) => <li key={item}>{item}</li>) ?? <li>Inventory, sales, HR and accounting workflows</li>}</ul>
+              <div className="showcase-stack">{copy?.skills?.slice(0, 5).map((skill) => <span key={skill}>{skill}</span>)}</div>
+              <div className="work-actions"><Link className="project-primary" href={`/projects/${repo.name}`}>Explore case study <ArrowUpRight size={17} aria-hidden="true" /></Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${titleFor(repo)} source code`}><Github size={18} /> Source</a></div>
+              <Link className="project-service-link" href={`/${repo.name}/`}>Project service <ArrowUpRight size={14} aria-hidden="true" /></Link>
+            </div>
+            <figure className="showcase-visual">
               <Link href={`/projects/${repo.name}`}><img src={asset(`/previews/${selectedImages[repo.name]}.webp`)} alt={`${titleFor(repo)} interface`} width={1200} height={750} loading="lazy" /></Link>
-              <figcaption>Interface captured from the project deployment</figcaption>
+              <figcaption>{repo.name === 'ecom-akhyanbd' ? 'The commerce storefront' : 'The account sign-in screen'}<span>Actual project interface</span></figcaption>
             </figure>
-            <h3><Link href={`/projects/${repo.name}`}>{titleFor(repo)}</Link></h3>
-            <p>{copy?.tagline ?? repo.description}</p>
-            <div className="work-actions"><Link href={`/projects/${repo.name}`}>Read case study</Link><Link href={`/${repo.name}/`}>Open project</Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer">Source code</a></div>
           </article>;
         })}
       </div>
       <div id="project-library" className="scroll-mt-28">
-        <div className="library-toolbar"><h3>All projects</h3><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} aria-label="Search projects" placeholder="Search by project or technology" />{query && <button type="button" onClick={() => setQuery('')}>Clear search</button>}</div>
+        <div className="library-toolbar"><div><h3>The full collection</h3><p>Different products. The same care for the details.</p></div><div className="project-search"><Search size={18} aria-hidden="true" /><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} aria-label="Search projects" placeholder="Find a project or technology" />{query && <button type="button" onClick={() => setQuery('')}>Clear</button>}</div></div>
         <div className="work-filters" aria-label="Filter projects">{groups.map((item) => <button type="button" key={item} aria-pressed={group === item} onClick={() => setGroup(item)}>{item}</button>)}</div>
         <p role="status" className="sr-only">{filtered.length} projects found</p>
-        <div>{filtered.map((repo) => <article className="work-row" key={repo.id}>
-          <div><h4><Link href={`/projects/${repo.name}`}>{titleFor(repo)}</Link></h4><p>{config.projectOverrides[repo.name]?.tagline ?? repo.description ?? 'Source code and implementation details available in the repository.'}</p></div>
-          <div><span className="work-kind">{deriveCategory(repo)}</span><p>{config.projectOverrides[repo.name]?.skills?.slice(0, 4).join(', ') ?? repo.language ?? 'See repository'}</p></div>
-          <div className="work-actions"><Link href={`/${repo.name}/`}>Open project</Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${titleFor(repo)} source on GitHub`}>Code</a><Link href={`/projects/${repo.name}`}>Case study</Link></div>
-        </article>)}</div>
+        <div className="project-collection">{filtered.map((repo) => {
+          const Icon = categoryIcon(repo);
+          const copy = config.projectOverrides[repo.name];
+          return <article className="collection-card" key={repo.id}>
+            <div className="collection-meta"><Icon size={24} aria-hidden="true" /><span>{deriveCategory(repo)}</span></div>
+            <h4><Link href={`/projects/${repo.name}`}>{titleFor(repo)}</Link></h4>
+            <p>{copy?.tagline ?? repo.description ?? 'Source code and implementation details available in the repository.'}</p>
+            <div className="collection-stack">{(copy?.skills?.slice(0, 3) ?? [repo.language ?? 'See repository']).map((skill) => <span key={skill}>{skill}</span>)}</div>
+            <div className="collection-links"><Link href={`/projects/${repo.name}`}>View case study <ArrowUpRight size={16} aria-hidden="true" /></Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${titleFor(repo)} source on GitHub`}><Github size={17} /></a><Link href={`/${repo.name}/`} aria-label={`Open ${titleFor(repo)} project service`}><ArrowUpRight size={17} /></Link></div>
+          </article>;
+        })}</div>
         {filtered.length === 0 && <div className="empty-work"><p>No projects match these filters.</p><button type="button" onClick={() => { setGroup('All work'); setQuery(''); }}>Reset filters</button></div>}
         <div className="work-actions"><a href={config.social.github} target="_blank" rel="noreferrer">View GitHub profile</a></div>
       </div>

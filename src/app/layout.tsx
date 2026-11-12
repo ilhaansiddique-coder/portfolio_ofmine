@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geologica, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import './portfolio.css';
 import { config } from '@/config';
 import MotionProvider from '@/components/MotionProvider';
 
