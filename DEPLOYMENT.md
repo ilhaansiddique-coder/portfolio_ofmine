@@ -14,10 +14,11 @@ the contact form opens the visitor's email application. It does not run Next.js
 API routes or require a database. HTML is revalidated normally; hashed Next.js
 assets receive long-lived caching.
 
-The container build skips the standalone storefront demo builds, which clone
-separate repositories. Those `/demo/` pages are not included in this image.
-The portfolio and project case studies are included. GitHub project data is
-fetched at build time, so redeploy to refresh it.
+Every published repository includes a browser-only workflow demo at `/<repo>/`.
+These simulations use sample data and browser storage: no app servers, databases,
+payment systems or upstream routing variables are needed. The container skips
+the legacy standalone `/demo/` builds; the new demos ship in the regular static
+export. GitHub project data is fetched at build time, so redeploy to refresh it.
 
 For a local Docker verification:
 

@@ -1,71 +1,43 @@
-# Project applications on ilhaansq.com
+# Static project workflow demos
 
-The portfolio is the index at `/`. Each published repository also has its own
-`/<repo>/` route. Repository names are used exactly, including case.
+Every published repository gets a static page at `/<repo>/`. The portfolio and
+its case studies link to that page. The demo is an explicitly labelled,
+representative workflow simulation; it is not the repository's original frontend
+or a deployed copy of its backend. Original source links remain available.
 
-## What this change does
+## What visitors can try
 
-The portfolio keeps case studies at `/projects/<repo>/`. `/<repo>/` is reserved
-for the actual application. The Nginx entrypoint can route that address to a
-separate service, without an iframe, a redirect to a third-party demo host, or a
-replacement UI. It forwards WebSocket upgrades, session cookies, query strings
-and the full original request path. Original app code is not changed by this
-portfolio repository.
+- Commerce: search a sample catalog, add/remove cart items, place a simulated
+  order and inspect the order history. No payment or personal information.
+- Inventory: receive stock, record sales, add products and inspect local activity.
+- HR: browse fictional employees, request leave and approve/decline requests.
+- Chat: change rooms and post messages locally. No network or real participants.
+- Work management: create tasks and move them through a progress board.
+- Reading: switch sample passages, adjust reading size and save bookmarks.
+- Tracking: generate local sample events and filter the event stream.
+- Motion: change an arrangement, adjust duration and pause/play the animation.
+- Portfolio: browse sample entries and open their detail views.
 
-When no service is connected, the static route explicitly says the live service
-is not connected. This is a status page, not a working application demo. No app
-is claimed to be deployed merely because its route exists.
+`src/lib/demo-catalog.ts` selects the scenario and its fixture data.
+`src/components/StaticDemo.tsx` implements interactions and project-scoped browser
+storage. `src/app/demos.css` provides the responsive demo interface.
 
-## Connect real services using this repository
+The disclosure at the top of every demo explains the sample-data boundary.
+`Reset demo` restores fixtures for that project. Where browser storage is
+unavailable, visitors can still interact for the current visit. No backend calls
+are made by the demo component. The source-code link is the only external link.
 
-Set `DEMO_UPSTREAMS` to newline-separated mappings. Use the exact repo name and
-an HTTP(S) origin with a hostname and optional port (no path or trailing slash):
+## Deployment
 
-```text
-HRM_IlhaanSq=http://hrm:3000
-ecom-akhyanbd=http://commerce:3000
-chat_application_multi_room_with_django=http://chat:8000
-```
+Build and deploy the portfolio's existing Docker Compose service. The new demos
+are part of the static Next.js export served by Nginx. No additional containers,
+credentials, databases or `DEMO_UPSTREAMS` setting are needed. The legacy upstream
+script is no longer included or executed by the Docker image.
 
-These are configuration examples, not services this repository has deployed.
-The services must already exist on a Docker network reachable from `portfolio`.
-The portfolio Compose file intentionally does not create database or application
-containers with guessed passwords, schemas or commands.
+At the main domain, Akhyan is at `/ecom-akhyanbd/`, HR at `/HRM_IlhaanSq/`, and chat
+at `/chat_application_multi_room_with_django/`. All other published repository
+names get the same path convention. Next.js also prefixes these routes correctly
+when the portfolio is built for a GitHub Pages subdirectory.
 
-For a local Compose run, provide the variable in the environment or a private
-`.env` file and run `docker compose up --build -d`. With no variable, the portfolio
-continues to work and each app path shows its connection status.
-
-## Required configuration in each original app
-
-The proxy preserves the `/<repo>/` prefix. The upstream must serve that prefix:
-
-- Next.js: build with `basePath: '/<repo>'`; use prefix-aware API and WebSocket
-  URLs and scope authentication callback URLs/cookies to the application.
-- Django: configure its script prefix/routing, static URL, CSRF trusted origins,
-  allowed hosts and Channels WebSocket routes for the public path.
-- Laravel: configure the public URL, asset/API routes, Sanctum domains and Reverb
-  URLs for the public path. Frontend and API may need their own route prefixes.
-- Flutter: build the actual web target with `--base-href /<repo>/`. An Android-only
-  build cannot be made into a working web app by changing this portfolio.
-
-A project that assumes it owns `/api`, `/login` or `/_next` cannot safely share a
-site with other applications until those assumptions are fixed in its source.
-The gateway deliberately does not rewrite HTML or fake those routes.
-
-## Before marking a project live
-
-Verify its own build, database migrations, persistence, authentication/login and
-logout, deep links on reload, file uploads, static assets and WebSockets. Use
-isolated demo data and demo accounts in each application's actual backend.
-The screenshot files in `public/previews` are images only; they do not provide
-these services. The existing `/demo/` storefront exports are browse-only and are
-not used as substitutes for full deployments.
-
-## Design
-
-The portfolio restyle follows Hallmark's Vantage material: a dark neutral field,
-restrained lime actions, plain labels and a work index led by existing real
-screenshots. Search, filters, source links and case-study routes remain. The
-portrait and introduction remain the owner's content. Illustrative preview
-assets are not used as evidence of a working app in the project index.
+These samples explain product workflows. They do not verify the corresponding
+production implementation, authentication, persistence or real-time backend.

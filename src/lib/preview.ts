@@ -32,18 +32,14 @@ export function buildLiveTabs(
   _languages: LanguageStat[],
   demo: string | null
 ): LiveTab[] {
-  // Only a demo we build and host ourselves (public/demo/<slug>/) gets the
-  // embedded, browse-it-here treatment — it's same-origin, so it always loads.
-  // Every other project falls through to the standardized ProjectPreview
-  // (real screenshot / labelled mockup), which is more reliable and consistent
-  // than embedding a third-party deployment or booting the repo via StackBlitz.
-  if (demo && demo.includes('/demo/')) {
+  // Only the portfolio's own browser-only simulations are embedded.
+  if (demo && demo.startsWith('/')) {
     return [
       {
         id: 'live',
-        label: 'Live Demo',
+        label: 'Workflow demo',
         url: demo,
-        note: 'The real app, built from this repository and running here — browse it freely.',
+        note: 'A representative workflow simulation using sample data. No backend, accounts, real orders or payments.',
       },
     ];
   }

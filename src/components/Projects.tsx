@@ -59,7 +59,7 @@ export default function Projects({ repos }: { repos: Repo[] }) {
               <ul className="showcase-details">{copy?.highlights?.slice(0, 3).map((item) => <li key={item}>{item}</li>) ?? <li>Inventory, sales, HR and accounting workflows</li>}</ul>
               <div className="showcase-stack">{copy?.skills?.slice(0, 5).map((skill) => <span key={skill}>{skill}</span>)}</div>
               <div className="work-actions"><Link className="project-primary" href={`/projects/${repo.name}`}>Explore case study <ArrowUpRight size={17} aria-hidden="true" /></Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${titleFor(repo)} source code`}><Github size={18} /> Source</a></div>
-              <Link className="project-service-link" href={`/${repo.name}/`}>Project service <ArrowUpRight size={14} aria-hidden="true" /></Link>
+              <Link className="project-service-link" href={`/${repo.name}/`}>Try workflow demo <ArrowUpRight size={14} aria-hidden="true" /></Link>
             </div>
             <figure className="showcase-visual">
               <Link href={`/projects/${repo.name}`}><img src={asset(`/previews/${selectedImages[repo.name]}.webp`)} alt={`${titleFor(repo)} interface`} width={1200} height={750} loading="lazy" /></Link>
@@ -80,7 +80,7 @@ export default function Projects({ repos }: { repos: Repo[] }) {
             <h4><Link href={`/projects/${repo.name}`}>{titleFor(repo)}</Link></h4>
             <p>{copy?.tagline ?? repo.description ?? 'Source code and implementation details available in the repository.'}</p>
             <div className="collection-stack">{(copy?.skills?.slice(0, 3) ?? [repo.language ?? 'See repository']).map((skill) => <span key={skill}>{skill}</span>)}</div>
-            <div className="collection-links"><Link href={`/projects/${repo.name}`}>View case study <ArrowUpRight size={16} aria-hidden="true" /></Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${titleFor(repo)} source on GitHub`}><Github size={17} /></a><Link href={`/${repo.name}/`} aria-label={`Open ${titleFor(repo)} project service`}><ArrowUpRight size={17} /></Link></div>
+            <div className="collection-links"><Link href={`/${repo.name}/`}>Try demo <ArrowUpRight size={16} aria-hidden="true" /></Link><a href={repo.htmlUrl} target="_blank" rel="noreferrer" aria-label={`View ${titleFor(repo)} source on GitHub`}><Github size={17} /></a><Link href={`/projects/${repo.name}`} aria-label={`Read ${titleFor(repo)} case study`}>Case study</Link></div>
           </article>;
         })}</div>
         {filtered.length === 0 && <div className="empty-work"><p>No projects match these filters.</p><button type="button" onClick={() => { setGroup('All work'); setQuery(''); }}>Reset filters</button></div>}

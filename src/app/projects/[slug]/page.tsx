@@ -115,7 +115,7 @@ export default async function ProjectPage({
           <div className="mt-7 flex flex-wrap gap-3">
             {insight.demo && (
               <a href={insight.demo} target="_blank" rel="noreferrer" className="btn-primary">
-                <ExternalLink size={18} /> Live Demo
+                <ExternalLink size={18} /> Try workflow demo
               </a>
             )}
             <a href={repo.htmlUrl} target="_blank" rel="noreferrer" className="btn-ghost">
