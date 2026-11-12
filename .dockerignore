@@ -6,6 +6,7 @@ out
 .aws
 .codex
 .agents
+.hallmark
 .env
 .env.*
 *.pem

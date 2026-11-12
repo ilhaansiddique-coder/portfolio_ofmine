@@ -4,7 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://ilhaansiddique-coder.github.io/portfolio_ofmine}
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://ilhaansq.com}
+    environment:
+      DEMO_UPSTREAMS: ${DEMO_UPSTREAMS:-}
     restart: unless-stopped
     expose:
       - "80"

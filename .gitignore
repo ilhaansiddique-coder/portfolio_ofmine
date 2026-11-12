@@ -30,6 +30,7 @@ yarn-error.log*
 
 # local github response cache (re-seeded on next successful fetch)
 /.gh-cache/
+/.hallmark/
 
 # Cloned source repos used to build the live theme demos. These are real git
 # clones — committing them creates broken gitlinks that corrupt fresh clones.

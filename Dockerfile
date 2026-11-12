@@ -12,6 +12,8 @@ RUN SKIP_DEMOS=1 npm run build
 
 FROM nginx:stable-alpine AS runner
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+COPY deploy/40-project-routes.sh /docker-entrypoint.d/40-project-routes.sh
+RUN chmod +x /docker-entrypoint.d/40-project-routes.sh
 COPY --from=builder /app/out /usr/share/nginx/html
 EXPOSE 80
 

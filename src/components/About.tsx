@@ -25,7 +25,7 @@ export default function About({ user }: { user: GitHubUser | null }) {
         </div>
 
         <div className="md:col-span-2">
-          <h3 className="mb-4 font-mono text-sm uppercase tracking-wider text-slate-400">
+          <h3 className="mb-4 text-sm text-slate-400">
             Tech I work with
           </h3>
           <div className="flex flex-wrap gap-2">

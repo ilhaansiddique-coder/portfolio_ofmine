@@ -8,14 +8,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: '#070711',
-        surface: '#0d0d1a',
-        card: '#11111f',
-        line: '#1f1f33',
+        bg: 'var(--color-paper)',
+        surface: 'var(--color-paper-2)',
+        card: 'var(--color-paper-2)',
+        line: 'var(--color-rule)',
         neon: {
-          DEFAULT: '#7c5cff',
-          cyan: '#22d3ee',
-          pink: '#f472b6',
+          DEFAULT: 'var(--color-accent)',
+          cyan: 'var(--color-ink-2)',
+          pink: 'var(--color-ink-2)',
         },
       },
       fontFamily: {
@@ -23,8 +23,8 @@ const config: Config = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 40px -10px rgba(124, 92, 255, 0.5)',
-        'glow-cyan': '0 0 40px -10px rgba(34, 211, 238, 0.45)',
+        glow: 'none',
+        'glow-cyan': 'none',
       },
       keyframes: {
         float: {

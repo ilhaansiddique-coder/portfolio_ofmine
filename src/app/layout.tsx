@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Geologica, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { config } from '@/config';
 import MotionProvider from '@/components/MotionProvider';
@@ -10,13 +10,15 @@ const inter = Inter({
   display: 'swap',
 });
 
+const editorial = Geologica({ subsets: ['latin'], variable: '--font-editorial', display: 'swap' });
+
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ilhaansiddique-coder.github.io/portfolio_ofmine';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ilhaansq.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -70,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrains.variable} ${editorial.variable}`}>
       {/* suppressHydrationWarning: browser extensions (ColorZilla, Grammarly,
           etc.) inject attributes like `cz-shortcut-listen` onto <body> on the
           client, which otherwise triggers a harmless hydration warning. */}
